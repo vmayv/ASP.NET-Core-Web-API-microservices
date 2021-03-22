@@ -42,7 +42,7 @@ namespace WebApplication.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete([FromQuery] string fromDate, [FromQuery] string toDate)
         {
-            _holder.Values = _holder.Values.Where(w => w.Date <= Convert.ToDateTime(toDate) && w.Date >= Convert.ToDateTime(fromDate)).ToList();
+            _holder.Values = _holder.Values.Where(w => !(w.Date <= Convert.ToDateTime(toDate) && w.Date >= Convert.ToDateTime(fromDate))).ToList();
             return Ok();
         }
 
@@ -56,7 +56,6 @@ namespace WebApplication.Controllers
                     value.TemperatureC = newValue;
                 }
             }
-
             return Ok();
         }
 
