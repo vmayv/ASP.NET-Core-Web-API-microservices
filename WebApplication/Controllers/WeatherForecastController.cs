@@ -59,6 +59,7 @@ namespace WebApplication.Controllers
             return Ok();
         }
 
+        [HttpPut("update")]
         public IActionResult Update([FromQuery] DateTime date, [FromQuery] int newValue)
         {
             foreach (var value in holder.Values)
