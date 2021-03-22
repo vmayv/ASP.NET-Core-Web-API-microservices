@@ -11,10 +11,10 @@ namespace WebApplication.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ValuesHolder holder;
+        private readonly ValuesHolder _holder;
         public WeatherForecastController(ValuesHolder holder)
         {
-            this.holder = holder;
+            this._holder = holder;
         }
 
         private readonly ILogger<WeatherForecastController> _logger;
@@ -27,14 +27,14 @@ namespace WebApplication.Controllers
         [HttpPost("save")]
         public IActionResult Save([FromQuery] DateTime date, [FromQuery] int temperatureC)
         {
-            holder.Values.Add(new WeatherForecast(date, temperatureC));
+            _holder.Values.Add(new WeatherForecast(date, temperatureC));
             return Ok();
         }
 
         [HttpGet("read")]
         public IActionResult Read()
         {
-            return Ok(holder.Values);
+            return Ok(_holder.Values);
         }
 
         [HttpGet("read")]
@@ -42,7 +42,7 @@ namespace WebApplication.Controllers
         {
             List<WeatherForecast> result = new List<WeatherForecast>();
 
-            foreach (var value in holder.Values)
+            foreach (var value in _holder.Values)
             {
                 if (value.Date <= toDate && value.Date >= fromDate)
                 {
@@ -55,14 +55,14 @@ namespace WebApplication.Controllers
         [HttpDelete("delete")]
         public IActionResult Delete([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
         {
-            holder.Values = holder.Values.Where(w => w.Date <= toDate && w.Date >= fromDate).ToList();
+            _holder.Values = _holder.Values.Where(w => w.Date <= toDate && w.Date >= fromDate).ToList();
             return Ok();
         }
 
         [HttpPut("update")]
         public IActionResult Update([FromQuery] DateTime date, [FromQuery] int newValue)
         {
-            foreach (var value in holder.Values)
+            foreach (var value in _holder.Values)
             {
                 if (value.Date == date)
                 {
