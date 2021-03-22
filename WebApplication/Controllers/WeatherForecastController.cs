@@ -17,34 +17,21 @@ namespace WebApplication.Controllers
             this._holder = holder;
         }
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpPost("save")]
-        public IActionResult Save([FromQuery] DateTime date, [FromQuery] int temperatureC)
+        public IActionResult Save([FromQuery] string date, [FromQuery] int temperatureC)
         {
-            _holder.Values.Add(new WeatherForecast(date, temperatureC));
+            _holder.Values.Add(new WeatherForecast(Convert.ToDateTime(date), temperatureC));
             return Ok();
         }
 
         [HttpGet("read")]
-        public IActionResult Read()
-        {
-            return Ok(_holder.Values);
-        }
-
-        [HttpGet("read")]
-        public IActionResult Read([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
+        public IActionResult Read([FromQuery] string fromDate, [FromQuery] string toDate)
         {
             List<WeatherForecast> result = new List<WeatherForecast>();
 
             foreach (var value in _holder.Values)
             {
-                if (value.Date <= toDate && value.Date >= fromDate)
+                if (value.Date <= Convert.ToDateTime(toDate) && value.Date >= Convert.ToDateTime(fromDate))
                 {
                     result.Add(value);
                 }
@@ -53,18 +40,18 @@ namespace WebApplication.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
+        public IActionResult Delete([FromQuery] string fromDate, [FromQuery] string toDate)
         {
-            _holder.Values = _holder.Values.Where(w => w.Date <= toDate && w.Date >= fromDate).ToList();
+            _holder.Values = _holder.Values.Where(w => w.Date <= Convert.ToDateTime(toDate) && w.Date >= Convert.ToDateTime(fromDate)).ToList();
             return Ok();
         }
 
         [HttpPut("update")]
-        public IActionResult Update([FromQuery] DateTime date, [FromQuery] int newValue)
+        public IActionResult Update([FromQuery] string date, [FromQuery] int newValue)
         {
             foreach (var value in _holder.Values)
             {
-                if (value.Date == date)
+                if (value.Date == Convert.ToDateTime(date))
                 {
                     value.TemperatureC = newValue;
                 }
