@@ -36,7 +36,9 @@ namespace WebApplication.Controllers
             for (int i = 0; i < holder.Values.Count; i++)
             {
                 if (holder.Values[i] == stringsToUpdate)
+                {
                     holder.Values[i] = newValue;
+                }
             }
 
             return Ok();
