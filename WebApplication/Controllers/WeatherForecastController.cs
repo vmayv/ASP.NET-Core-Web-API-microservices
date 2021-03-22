@@ -11,10 +11,11 @@ namespace WebApplication.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        private readonly ValuesHolder holder;
+        public WeatherForecastController(ValuesHolder holder)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            this.holder = holder;
+        }
 
         private readonly ILogger<WeatherForecastController> _logger;
 
@@ -23,17 +24,53 @@ namespace WebApplication.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpPost("save")]
+        public IActionResult Save([FromQuery] DateTime date, [FromQuery] int temperatureC)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            holder.Values.Add(new WeatherForecast(date, temperatureC));
+            return Ok();
         }
+
+        [HttpGet("read")]
+        public IActionResult Read()
+        {
+            return Ok(holder.Values);
+        }
+
+        [HttpGet("read")]
+        public IActionResult Read([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
+        {
+            List<WeatherForecast> result = new List<WeatherForecast>();
+
+            foreach (var value in holder.Values)
+            {
+                if (value.Date <= toDate && value.Date >= fromDate)
+                {
+                    result.Add(value);
+                }
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult Delete([FromQuery] DateTime fromDate, [FromQuery] DateTime toDate)
+        {
+            holder.Values = holder.Values.Where(w => w.Date <= toDate && w.Date >= fromDate).ToList();
+            return Ok();
+        }
+
+        public IActionResult Update([FromQuery] DateTime date, [FromQuery] int newValue)
+        {
+            foreach (var value in holder.Values)
+            {
+                if (value.Date == date)
+                {
+                    value.TemperatureC = newValue;
+                }
+            }
+
+            return Ok();
+        }
+
     }
 }

@@ -7,11 +7,11 @@ namespace WebApplication
 {
     public class ValuesHolder
     {
-        public List<string> Values { get; set; }
+        public List<WeatherForecast> Values { get; set; }
 
         public ValuesHolder()
         {
-            Values = new List<string>();
+            Values = new List<WeatherForecast>();
         }
     }
 }
