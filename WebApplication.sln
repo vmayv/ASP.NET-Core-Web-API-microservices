@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary", "ClassLibrar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsManagerTests", "MetricsManagerTests\MetricsManagerTests.csproj", "{FF0DFC4B-2CB9-4972-8E57-AE876F463060}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsAgent", "MetricsAgent\MetricsAgent.csproj", "{D7342ACA-DA4E-4C29-83A7-44FB07067F9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FF0DFC4B-2CB9-4972-8E57-AE876F463060}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF0DFC4B-2CB9-4972-8E57-AE876F463060}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF0DFC4B-2CB9-4972-8E57-AE876F463060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7342ACA-DA4E-4C29-83A7-44FB07067F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7342ACA-DA4E-4C29-83A7-44FB07067F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7342ACA-DA4E-4C29-83A7-44FB07067F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7342ACA-DA4E-4C29-83A7-44FB07067F9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
