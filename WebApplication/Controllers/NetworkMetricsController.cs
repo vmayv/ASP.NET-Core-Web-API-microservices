@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static ClassLibrary.Class;
 
-namespace WebApplication.Controllers
+namespace MetricsManager.Controllers
 {
     [Route("api/metrics/network")]
     [ApiController]
