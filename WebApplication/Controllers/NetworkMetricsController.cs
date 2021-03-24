@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/metrics/network")]
     [ApiController]
     public class NetworkMetricsController : ControllerBase
     {
