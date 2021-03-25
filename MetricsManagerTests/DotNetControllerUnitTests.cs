@@ -1,17 +1,19 @@
-using MetricsManager.Controllers;
+﻿using MetricsManager.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace MetricsManagerTests
 {
-    public class CpuControllerUnitTests
+    public class DotNetControllerUnitTests
     {
-        private CpuMetricsController _controller;
+        private DotNetMetricsController _controller;
 
-        public CpuControllerUnitTests()
+        public DotNetControllerUnitTests()
         {
-            _controller = new CpuMetricsController();
+            _controller = new DotNetMetricsController();
         }
 
         [Fact]
@@ -75,4 +77,3 @@ namespace MetricsManagerTests
         }
     }
 }
-

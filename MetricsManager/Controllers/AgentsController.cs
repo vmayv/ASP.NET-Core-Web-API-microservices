@@ -29,5 +29,11 @@ namespace MetricsManager.Controllers
             return Ok();
         }
 
+        [HttpGet("getagentslist")]
+        public IActionResult GetAgentsList()
+        {
+            return Ok();
+        }
+
     }
 }
