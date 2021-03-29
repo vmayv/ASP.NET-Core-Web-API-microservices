@@ -23,6 +23,7 @@ namespace MetricsAgent.Controllers
         [HttpGet("/left/")]
         public IActionResult GetHddLeft()
         {
+            _logger.LogInformation($"GET");
             return Ok();
         }
     }

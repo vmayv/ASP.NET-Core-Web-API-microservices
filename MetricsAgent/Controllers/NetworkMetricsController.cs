@@ -23,6 +23,7 @@ namespace MetricsAgent.Controllers
         [HttpGet("/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetrics([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
         {
+            _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok();
         }
     }

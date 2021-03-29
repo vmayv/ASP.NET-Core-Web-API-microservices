@@ -24,12 +24,14 @@ namespace MetricsAgent.Controllers
         [HttpGet("/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetrics([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
         {
+            _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok();
         }
 
         [HttpGet("/from/{fromTime}/to/{toTime}/percentiles/{percentile}")]
         public IActionResult GetMetricsByPercentile([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime, [FromRoute] Percentile percentile)
         {
+            _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}, percentile = {percentile}");
             return Ok();
         }
     }

@@ -23,6 +23,7 @@ namespace MetricsAgent.Controllers
         [HttpGet("/avaliable/")]
         public IActionResult GetAvailableRam()
         {
+            _logger.LogInformation($"GET");
             return Ok();
         }
     }

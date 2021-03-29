@@ -23,6 +23,7 @@ namespace MetricsAgent.Controllers
         [HttpGet("/errors-count/from/{fromTime}/to/{toTime}")]
         public IActionResult GetErrorsCountMetrics([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
         {
+            _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok();
         }
     }
