@@ -43,6 +43,6 @@ namespace MetricsManager
             {
                 logging.ClearProviders(); // создание провайдеров логирования
                 logging.SetMinimumLevel(LogLevel.Trace); // устанавливаем минимальный уровень логирования
-            }).UseNLog();
+            }).UseNLog(); // добавляем библиотеку nlog
     }
 }
