@@ -18,7 +18,7 @@ namespace MetricsAgent.DAL
         // инжектируем соединение с базой данных в наш репозиторий через конструктор
         public CpuMetricsRepository(SQLiteConnection connection)
         {
-            this._connection = connection;
+            _connection = connection;
         }
 
         public void Create(CpuMetric item)
