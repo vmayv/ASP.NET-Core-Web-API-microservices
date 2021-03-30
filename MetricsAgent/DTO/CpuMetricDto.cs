@@ -11,7 +11,7 @@ namespace MetricsAgent
 
         public int Value { get; set; }
 
-        public int Time { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }
 
