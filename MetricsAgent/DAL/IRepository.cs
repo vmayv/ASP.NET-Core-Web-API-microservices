@@ -13,9 +13,11 @@ namespace MetricsAgent.DAL
 
         void Create(T item);
 
-        void Update(T item);
+        /* void Update(T item);
 
-        void Delete(int id);
+         void Delete(int id);*/
+
+        IList<T> GetByTimePeriod(string fromDate, string toDate);
     }
 
 }

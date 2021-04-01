@@ -40,7 +40,7 @@ namespace MetricsAgent.DAL
             // выполнение команды
             cmd.ExecuteNonQuery();
         }
-
+        /*
         public void Delete(int id)
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -51,7 +51,7 @@ namespace MetricsAgent.DAL
 
             cmd.ExecuteNonQuery();
         }
-
+        
         public void Update(CpuMetric item)
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -62,7 +62,7 @@ namespace MetricsAgent.DAL
             cmd.Parameters.AddWithValue("@time", item.Time);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
-        }
+        }*/
 
         public IList<CpuMetric> GetAll()
         {
@@ -116,5 +116,35 @@ namespace MetricsAgent.DAL
                 }
             }
         }
+
+        public IList<CpuMetric> GetByTimePeriod(string fromDate, string toDate)
+        {
+            using var cmd = new SQLiteCommand(_connection);
+
+            // прописываем в команду SQL запрос на получение данных
+            cmd.CommandText = "SELECT * FROM cpumetrics WHERE time BETWEEN datetime(@fromDate) AND datetime(@toDate)";
+
+            var returnList = new List<CpuMetric>();
+
+            using (SQLiteDataReader reader = cmd.ExecuteReader())
+            {
+                // пока есть что читать -- читаем
+                while (reader.Read())
+                {
+                    // добавляем объект в список возврата
+                    returnList.Add(new CpuMetric
+                    {
+                        Id = reader.GetInt32(0),
+                        Value = reader.GetInt32(1),
+                        // налету преобразуем прочитанный TEXT в DateTimeOffset
+                        Time = DateTimeOffset.Parse(reader.GetString(2))
+                    });
+                }
+            }
+
+            return returnList;
+
+        }
     }
 }
+

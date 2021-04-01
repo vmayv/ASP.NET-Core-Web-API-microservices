@@ -12,5 +12,29 @@ namespace MetricsAgent.DAL
     }
     public class DotNetMetricsRepository : IDotNetMetricsRepository
     {
+        public void Create(DotNetMetric item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<DotNetMetric> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DotNetMetric GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DotNetMetric GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<DotNetMetric> GetByTimePeriod(string fromDate, string toDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

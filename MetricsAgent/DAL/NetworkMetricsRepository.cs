@@ -12,5 +12,24 @@ namespace MetricsAgent.DAL
     }
     public class NetworkMetricsRepository : INetworkMetricsRepository
     {
+        public void Create(NetworkMetric item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<NetworkMetric> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public NetworkMetric GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<NetworkMetric> GetByTimePeriod(string fromDate, string toDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

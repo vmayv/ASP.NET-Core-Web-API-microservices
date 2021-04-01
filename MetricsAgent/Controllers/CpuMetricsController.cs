@@ -28,11 +28,24 @@ namespace MetricsAgent.Controllers
             _repository = repository;
         }
 
-        [HttpGet("/from/{fromTime}/to/{toTime}")]
-        public IActionResult GetMetrics([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
+        [HttpGet("from/{fromTime}/to/{toTime}")]
+        public IActionResult GetMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
-            return Ok();
+            string from = fromTime.ToString();
+            var metrics = _repository.GetByTimePeriod(fromTime.ToString(), toTime.ToString());
+            
+            var response = new CpuMetricsByTimePeriodResponse()
+            {
+                Metrics = new List<CpuMetricDto>()
+            };
+
+            foreach (var metric in metrics)
+            {
+                response.Metrics.Add(new CpuMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+            }
+
+            return Ok(response);
         }
 
         [HttpGet("/from/{fromTime}/to/{toTime}/percentiles/{percentile}")]
@@ -53,7 +66,7 @@ namespace MetricsAgent.Controllers
 
             return Ok();
         }
-
+        
         [HttpGet("all")]
         public IActionResult GetAll()
         {

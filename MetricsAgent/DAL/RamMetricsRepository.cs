@@ -12,5 +12,24 @@ namespace MetricsAgent.DAL
     }
     public class RamMetricsRepository : IRamMetricsRepository
     {
+        public void Create(RamMetric item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<RamMetric> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RamMetric GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<RamMetric> GetByTimePeriod(string fromDate, string toDate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
