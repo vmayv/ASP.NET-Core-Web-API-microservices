@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MetricsAgent
+namespace MetricsAgent.DTO
 {
-    public class CpuMetricDto
+    public class RamMetricDto
     {
         public int Id { get; set; }
 
@@ -14,4 +14,3 @@ namespace MetricsAgent
         public DateTimeOffset Time { get; set; }
     }
 }
-

@@ -47,7 +47,7 @@ namespace MetricsAgent.Controllers
         {
             _repository.Create(new CpuMetric
             {
-                Time = TimeSpan.Parse(request.Time),
+                Time = DateTimeOffset.Parse(request.Time),
                 Value = request.Value
             });
 

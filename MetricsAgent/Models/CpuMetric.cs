@@ -11,6 +11,6 @@ namespace MetricsAgent.Models
 
         public int Value { get; set; }
 
-        public TimeSpan Time { get; set; }
+        public DateTimeOffset Time { get; set; }
     }
 }

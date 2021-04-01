@@ -51,9 +51,48 @@ namespace MetricsAgent
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
-
                 command.CommandText = @"CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
+                    value INT, time TEXT)";
+                command.ExecuteNonQuery();
+
+
+                command.CommandText = "DROP TABLE IF EXISTS dotnetmetrics";
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+                command.CommandText = @"CREATE TABLE dotnetmetrics(id INTEGER PRIMARY KEY,
+                    value INT, time TEXT)"; ;
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+
+                command.CommandText = "DROP TABLE IF EXISTS hddmetrics";
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+                command.CommandText = @"CREATE TABLE hddmetrics(id INTEGER PRIMARY KEY,
+                    value INT, time TEXT)"; ;
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+
+                command.CommandText = "DROP TABLE IF EXISTS networkmetrics";
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+                command.CommandText = @"CREATE TABLE networkmetrics(id INTEGER PRIMARY KEY,
+                    value INT, time TEXT)"; ;
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+
+                command.CommandText = "DROP TABLE IF EXISTS rammetrics";
+                // отправляем запрос в базу данных
+                command.ExecuteNonQuery();
+
+                command.CommandText = @"CREATE TABLE rammetrics(id INTEGER PRIMARY KEY,
+                    value INT, time TEXT)"; ;
+                // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
             }
         }
