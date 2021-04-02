@@ -29,7 +29,16 @@ namespace MetricsAgent.Controllers
         public IActionResult GetHddLeft()
         {
             _logger.LogInformation($"GET");
-            return Ok();
+            var metrics = _repository.GetLast();
+
+            var response = new HddMetricsGetLastResponse()
+            {
+                Id = metrics.Id,
+                Value = metrics.Value,
+                Time = metrics.Time
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("/left/from/{fromTime}/to/{toTime}")]

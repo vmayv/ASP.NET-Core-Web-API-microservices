@@ -9,7 +9,7 @@ namespace MetricsAgent.DAL
 {
     public interface IRamMetricsRepository : IRepository<RamMetric>
     {
-        IList<RamMetric> GetLast();
+        RamMetric GetLast();
     }
     public class RamMetricsRepository : IRamMetricsRepository
     {
@@ -74,9 +74,32 @@ namespace MetricsAgent.DAL
 
         }
 
-        public IList<RamMetric> GetLast()
+        public RamMetric GetLast()
         {
-            throw new NotImplementedException();
+            using var cmd = new SQLiteCommand(_connection);
+
+            // прописываем в команду SQL запрос на получение данных
+            cmd.CommandText = "SELECT * FROM hddmetrics WHERE id = (SELECT MAX(id) from hddmetrics)";
+
+            using (SQLiteDataReader reader = cmd.ExecuteReader())
+            {
+                // если удалось что то прочитать
+                if (reader.Read())
+                {
+                    // возвращаем прочитанное
+                    return new RamMetric
+                    {
+                        Id = reader.GetInt32(0),
+                        Value = reader.GetInt32(1),
+                        Time = DateTimeOffset.Parse(reader.GetString(2))
+                    };
+                }
+                else
+                {
+                    // не нашлось запись по идентификатору, не делаем ничего
+                    return null;
+                }
+            }
         }
     }
 }

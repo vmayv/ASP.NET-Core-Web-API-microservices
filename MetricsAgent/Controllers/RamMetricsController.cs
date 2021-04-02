@@ -29,7 +29,17 @@ namespace MetricsAgent.Controllers
         public IActionResult GetAvailableRam()
         {
             _logger.LogInformation($"GET");
-            return Ok();
+            var metrics = _repository.GetLast();
+
+            var response = new RamMetricsGetLastResponse()
+            {
+                Id = metrics.Id,
+                Value = metrics.Value,
+                Time = metrics.Time
+            };
+
+            return Ok(response);
+
         }
 
         [HttpGet("/avaliable/from/{fromTime}/to/{toTime}")]
