@@ -64,7 +64,7 @@ namespace MetricsAgent.DAL
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }*/
-
+        /*
         public IList<CpuMetric> GetAll()
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -91,7 +91,7 @@ namespace MetricsAgent.DAL
             }
 
             return returnList;
-        }
+        }*/
 
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
