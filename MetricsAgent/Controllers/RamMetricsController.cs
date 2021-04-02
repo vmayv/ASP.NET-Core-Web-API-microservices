@@ -47,8 +47,6 @@ namespace MetricsAgent.Controllers
         [HttpGet("/avaliable/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
-            _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
-
             var metrics = _repository.GetByTimePeriod(fromTime, toTime);
 
             var response = new RamMetricsByTimePeriodResponse()
@@ -60,7 +58,7 @@ namespace MetricsAgent.Controllers
             {
                 response.Metrics.Add(new RamMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
             }
-
+            _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok(response);
         }
 
@@ -72,7 +70,7 @@ namespace MetricsAgent.Controllers
                 Time = DateTimeOffset.Parse(request.Time),
                 Value = request.Value
             });
-
+            _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }
     }
