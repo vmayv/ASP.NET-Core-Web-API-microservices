@@ -1,4 +1,6 @@
 ﻿using MetricsAgent.DAL;
+using MetricsAgent.DTO;
+using MetricsAgent.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -37,14 +39,14 @@ namespace MetricsAgent.Controllers
 
             var metrics = _repository.GetByTimePeriod(fromTime, toTime);
 
-            var response = new CpuMetricsByTimePeriodResponse()
+            var response = new RamMetricsByTimePeriodResponse()
             {
-                Metrics = new List<CpuMetricDto>()
+                Metrics = new List<RamMetricDto>()
             };
 
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new CpuMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+                response.Metrics.Add(new RamMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
             }
 
             return Ok(response);

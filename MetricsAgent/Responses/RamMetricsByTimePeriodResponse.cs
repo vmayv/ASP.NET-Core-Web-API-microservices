@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MetricsAgent.Responses
 {
-    public class CpuMetricsByTimePeriodResponse
+    public class RamMetricsByTimePeriodResponse
     {
-        public List<CpuMetricDto> Metrics { get; set; }
+        public List<RamMetricDto> Metrics { get; set; }
     }
 }
