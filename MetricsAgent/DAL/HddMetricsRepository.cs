@@ -27,7 +27,7 @@ namespace MetricsAgent.DAL
             throw new NotImplementedException();
         }
 
-        public IList<HddMetric> GetByTimePeriod(string fromDate, string toDate)
+        public IList<HddMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
             throw new NotImplementedException();
         }

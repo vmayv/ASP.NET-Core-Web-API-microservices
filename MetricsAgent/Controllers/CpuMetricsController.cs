@@ -33,7 +33,7 @@ namespace MetricsAgent.Controllers
         {
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             string from = fromTime.ToString();
-            var metrics = _repository.GetByTimePeriod(fromTime.ToString(), toTime.ToString());
+            var metrics = _repository.GetByTimePeriod(fromTime, toTime);
             
             var response = new CpuMetricsByTimePeriodResponse()
             {

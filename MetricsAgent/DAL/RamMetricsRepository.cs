@@ -27,7 +27,7 @@ namespace MetricsAgent.DAL
             throw new NotImplementedException();
         }
 
-        public IList<RamMetric> GetByTimePeriod(string fromDate, string toDate)
+        public IList<RamMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
             throw new NotImplementedException();
         }

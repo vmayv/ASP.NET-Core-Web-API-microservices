@@ -52,7 +52,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY,
-                    value INT, time TEXT)";
+                    value INT, time INT)";
                 command.ExecuteNonQuery();
 
 
@@ -61,7 +61,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE dotnetmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time TEXT)"; ;
+                    value INT, time INT)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
@@ -71,7 +71,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE hddmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time TEXT)"; ;
+                    value INT, time INT)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
@@ -81,7 +81,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE networkmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time TEXT)"; ;
+                    value INT, time INT)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
@@ -91,7 +91,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE rammetrics(id INTEGER PRIMARY KEY,
-                    value INT, time TEXT)"; ;
+                    value INT, time INT)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
             }

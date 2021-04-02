@@ -17,7 +17,7 @@ namespace MetricsAgent.DAL
 
          void Delete(int id);*/
 
-        IList<T> GetByTimePeriod(string fromDate, string toDate);
+        IList<T> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate);
     }
 
 }

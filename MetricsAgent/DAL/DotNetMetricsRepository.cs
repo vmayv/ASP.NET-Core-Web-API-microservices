@@ -27,12 +27,7 @@ namespace MetricsAgent.DAL
             throw new NotImplementedException();
         }
 
-        public DotNetMetric GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<DotNetMetric> GetByTimePeriod(string fromDate, string toDate)
+        public IList<DotNetMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
             throw new NotImplementedException();
         }
