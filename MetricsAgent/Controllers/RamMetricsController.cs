@@ -1,5 +1,7 @@
 ﻿using MetricsAgent.DAL;
 using MetricsAgent.DTO;
+using MetricsAgent.Models;
+using MetricsAgent.Requests;
 using MetricsAgent.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +62,18 @@ namespace MetricsAgent.Controllers
             }
 
             return Ok(response);
+        }
+
+        [HttpPost("create")]
+        public IActionResult Create([FromBody] RamMetricCreateRequest request)
+        {
+            _repository.Create(new RamMetric
+            {
+                Time = DateTimeOffset.Parse(request.Time),
+                Value = request.Value
+            });
+
+            return Ok();
         }
     }
 }
