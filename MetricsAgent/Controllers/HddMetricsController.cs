@@ -30,7 +30,6 @@ namespace MetricsAgent.Controllers
         [HttpGet("/left/")]
         public IActionResult GetHddLeft()
         {
-            _logger.LogInformation($"GET");
             var metrics = _repository.GetLast();
 
             var response = new HddMetricsGetLastResponse()
@@ -39,7 +38,7 @@ namespace MetricsAgent.Controllers
                 Value = metrics.Value,
                 Time = metrics.Time
             };
-
+            _logger.LogInformation($"GET");
             return Ok(response);
         }
 

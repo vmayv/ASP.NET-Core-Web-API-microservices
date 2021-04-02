@@ -30,7 +30,6 @@ namespace MetricsAgent.Controllers
         [HttpGet("/avaliable/")]
         public IActionResult GetAvailableRam()
         {
-            _logger.LogInformation($"GET");
             var metrics = _repository.GetLast();
 
             var response = new RamMetricsGetLastResponse()
@@ -40,8 +39,8 @@ namespace MetricsAgent.Controllers
                 Time = metrics.Time
             };
 
+            _logger.LogInformation($"GET");
             return Ok(response);
-
         }
 
         [HttpGet("/avaliable/from/{fromTime}/to/{toTime}")]
