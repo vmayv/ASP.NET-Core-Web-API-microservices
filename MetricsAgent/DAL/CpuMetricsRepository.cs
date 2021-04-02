@@ -119,14 +119,15 @@ namespace MetricsAgent.DAL
 
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            var fromDateInt = long.Parse(fromDate.ToString("yyyyMMddHHmmss"));
-            var toDateInt = long.Parse(toDate.ToString("yyyyMMddHHmmss"));
+            var fromDateLong = long.Parse(fromDate.ToString("yyyyMMddHHmmss"));
+            var toDateLong = long.Parse(toDate.ToString("yyyyMMddHHmmss"));
 
             using var cmd = new SQLiteCommand(_connection);
 
             // прописываем в команду SQL запрос на получение данных
-            cmd.CommandText = "SELECT * FROM cpumetrics WHERE time > @fromDateInt";
-            cmd.Parameters.AddWithValue("@fromDateInt", fromDateInt);
+            cmd.CommandText = "SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong";
+            cmd.Parameters.AddWithValue("@fromDateLong", fromDateLong);
+            cmd.Parameters.AddWithValue("@toDateLong", toDateLong);
 
             var returnList = new List<CpuMetric>();
 

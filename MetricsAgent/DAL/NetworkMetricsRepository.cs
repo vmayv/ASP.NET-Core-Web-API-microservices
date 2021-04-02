@@ -1,6 +1,7 @@
 ﻿using MetricsAgent.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,13 @@ namespace MetricsAgent.DAL
     }
     public class NetworkMetricsRepository : INetworkMetricsRepository
     {
+        private SQLiteConnection _connection;
+
+        // инжектируем соединение с базой данных в наш репозиторий через конструктор
+        public NetworkMetricsRepository(SQLiteConnection connection)
+        {
+            _connection = connection;
+        }
         public void Create(NetworkMetric item)
         {
             throw new NotImplementedException();

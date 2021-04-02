@@ -66,7 +66,7 @@ namespace MetricsAgent.Controllers
 
             return Ok();
         }
-        
+        //для тестирования ответов
         [HttpGet("all")]
         public IActionResult GetAll()
         {

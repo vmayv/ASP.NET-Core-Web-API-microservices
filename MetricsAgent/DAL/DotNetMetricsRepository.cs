@@ -1,6 +1,7 @@
 ﻿using MetricsAgent.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,9 +13,32 @@ namespace MetricsAgent.DAL
     }
     public class DotNetMetricsRepository : IDotNetMetricsRepository
     {
+        private SQLiteConnection _connection;
+
+        // инжектируем соединение с базой данных в наш репозиторий через конструктор
+        public DotNetMetricsRepository(SQLiteConnection connection)
+        {
+            _connection = connection;
+        }
+
         public void Create(DotNetMetric item)
         {
-            throw new NotImplementedException();
+            // создаем команду
+            using var cmd = new SQLiteCommand(_connection);
+            // прописываем в команду SQL запрос на вставку данных
+            cmd.CommandText = "INSERT INTO dotnetmetrics(value, time) VALUES(@value, @time)";
+
+            // добавляем параметры в запрос из нашего объекта
+            cmd.Parameters.AddWithValue("@value", item.Value);
+
+            // в таблице будем хранить время в секундах, потому преобразуем перед записью в секунды
+            // через свойство
+            cmd.Parameters.AddWithValue("@time", item.Time);
+            // подготовка команды к выполнению
+            cmd.Prepare();
+
+            // выполнение команды
+            cmd.ExecuteNonQuery();
         }
 
         public IList<DotNetMetric> GetAll()
