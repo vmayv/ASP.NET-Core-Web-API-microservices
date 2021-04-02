@@ -27,7 +27,7 @@ namespace MetricsAgent.Controllers
             _repository = repository;
         }
 
-        [HttpGet("/left/")]
+        [HttpGet("left")]
         public IActionResult GetHddLeft()
         {
             var metrics = _repository.GetLast();
@@ -65,7 +65,7 @@ namespace MetricsAgent.Controllers
         {
             _repository.Create(new HddMetric
             {
-                Time = DateTimeOffset.Parse(request.Time),
+                Time = request.Time,
                 Value = request.Value
             });
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");

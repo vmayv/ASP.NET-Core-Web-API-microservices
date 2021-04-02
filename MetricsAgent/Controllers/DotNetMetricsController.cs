@@ -50,7 +50,7 @@ namespace MetricsAgent.Controllers
         {
             _repository.Create(new DotNetMetric
             {
-                Time = DateTimeOffset.Parse(request.Time),
+                Time = request.Time,
                 Value = request.Value
             });
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
