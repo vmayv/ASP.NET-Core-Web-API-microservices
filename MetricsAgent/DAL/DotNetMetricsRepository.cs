@@ -33,7 +33,7 @@ namespace MetricsAgent.DAL
 
             // в таблице будем хранить время в секундах, потому преобразуем перед записью в секунды
             // через свойство
-            cmd.Parameters.AddWithValue("@time", item.Time);
+            cmd.Parameters.AddWithValue("@time", item.Time.Ticks);
             // подготовка команды к выполнению
             cmd.Prepare();
 
@@ -43,15 +43,12 @@ namespace MetricsAgent.DAL
 
         public IList<DotNetMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            var fromDateLong = long.Parse(fromDate.ToString("yyyyMMddHHmmss"));
-            var toDateLong = long.Parse(toDate.ToString("yyyyMMddHHmmss"));
-
             using var cmd = new SQLiteCommand(_connection);
 
             // прописываем в команду SQL запрос на получение данных
             cmd.CommandText = "SELECT * FROM dotnetmetrics WHERE time BETWEEN @fromDateLong AND @toDateLong";
-            cmd.Parameters.AddWithValue("@fromDateLong", fromDateLong);
-            cmd.Parameters.AddWithValue("@toDateLong", toDateLong);
+            cmd.Parameters.AddWithValue("@fromDateLong", fromDate.Ticks);
+            cmd.Parameters.AddWithValue("@toDateLong", toDate.Ticks);
 
             var returnList = new List<DotNetMetric>();
 
@@ -66,7 +63,7 @@ namespace MetricsAgent.DAL
                         Id = reader.GetInt32(0),
                         Value = reader.GetInt32(1),
                         // налету преобразуем прочитанный int в DateTimeOffset
-                        Time = DateTimeOffset.Parse(reader.GetString(2))
+                        Time = new DateTimeOffset(reader.GetInt64(2), TimeSpan.FromHours(3))
                     });
                 }
             }

@@ -59,19 +59,20 @@ namespace MetricsAgent.Controllers
         {
             _repository.Create(new CpuMetric
             {
-                Time = DateTimeOffset.Parse(request.Time),
+                Time = request.Time,
                 Value = request.Value
             });
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }
-        /*для тестирования ответов
+        /*для тестирования ответов*/
         [HttpGet("all")]
         public IActionResult GetAll()
+        
         {
             var metrics = _repository.GetAll();
 
-            var response = new AllCpuMetricsResponse()
+            var response = new CpuMetricsByTimePeriodResponse()
             {
                 Metrics = new List<CpuMetricDto>()
             };
@@ -82,7 +83,7 @@ namespace MetricsAgent.Controllers
             }
 
             return Ok(response);
-        }*/
+        }
     }
 
 }

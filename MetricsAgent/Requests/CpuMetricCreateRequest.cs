@@ -7,7 +7,7 @@ namespace MetricsAgent.Requests
 {
     public class CpuMetricCreateRequest
     {
-        public string Time { get; set; }
+        public DateTimeOffset Time { get; set; }
         public int Value { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace MetricsAgent.DAL
     public interface ICpuMetricsRepository : IRepository<CpuMetric>
     {
         IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile);
+        IList<CpuMetric> GetAll();
     }
     public class CpuMetricsRepository : ICpuMetricsRepository
     {
@@ -32,9 +33,9 @@ namespace MetricsAgent.DAL
             // добавляем параметры в запрос из нашего объекта
             cmd.Parameters.AddWithValue("@value", item.Value);
 
-            // в таблице будем хранить время в секундах, потому преобразуем перед записью в секунды
+            // в таблице будем хранить время в int, потому преобразуем перед записью в int
             // через свойство
-            cmd.Parameters.AddWithValue("@time", item.Time);
+            cmd.Parameters.AddWithValue("@time", item.Time.Ticks);
             // подготовка команды к выполнению
             cmd.Prepare();
 
@@ -64,7 +65,7 @@ namespace MetricsAgent.DAL
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }*/
-        /*
+        
         public IList<CpuMetric> GetAll()
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -84,26 +85,23 @@ namespace MetricsAgent.DAL
                     {
                         Id = reader.GetInt32(0),
                         Value = reader.GetInt32(1),
-                        // налету преобразуем прочитанный TEXT в DateTimeOffset
-                        Time = DateTimeOffset.Parse(reader.GetString(2))
+                        // налету преобразуем прочитанный int в DateTimeOffset
+                        Time = new DateTimeOffset(reader.GetInt64(2), TimeSpan.FromHours(3))
                     });
                 }
             }
 
             return returnList;
-        }*/
+        }
 
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            var fromDateLong = long.Parse(fromDate.ToString("yyyyMMddHHmmss"));
-            var toDateLong = long.Parse(toDate.ToString("yyyyMMddHHmmss"));
-
             using var cmd = new SQLiteCommand(_connection);
 
             // прописываем в команду SQL запрос на получение данных
             cmd.CommandText = "SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong";
-            cmd.Parameters.AddWithValue("@fromDateLong", fromDateLong);
-            cmd.Parameters.AddWithValue("@toDateLong", toDateLong);
+            cmd.Parameters.AddWithValue("@fromDateLong", fromDate.Ticks);
+            cmd.Parameters.AddWithValue("@toDateLong", toDate.Ticks);
 
             var returnList = new List<CpuMetric>();
 
@@ -118,7 +116,7 @@ namespace MetricsAgent.DAL
                         Id = reader.GetInt32(0),
                         Value = reader.GetInt32(1),
                         // налету преобразуем прочитанный int в DateTimeOffset
-                        Time = DateTimeOffset.Parse(reader.GetString(2))
+                        Time = new DateTimeOffset(reader.GetInt64(2), TimeSpan.FromHours(3))
                     });
                 }
             }
