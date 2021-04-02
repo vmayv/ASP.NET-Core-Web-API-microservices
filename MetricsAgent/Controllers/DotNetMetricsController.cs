@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MetricsAgent.DAL;
+using MetricsAgent.DTO;
+using MetricsAgent.Responses;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,18 +16,32 @@ namespace MetricsAgent.Controllers
     public class DotNetMetricsController : ControllerBase
     {
         private readonly ILogger<DotNetMetricsController> _logger;
+        private IDotNetMetricsRepository _repository;
 
-        public DotNetMetricsController(ILogger<DotNetMetricsController> logger)
+        public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger<DotNetMetricsController> logger)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в DotNetMetricsController");
+            _repository = repository;
         }
 
         [HttpGet("/errors-count/from/{fromTime}/to/{toTime}")]
-        public IActionResult GetErrorsCountMetrics([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
+        public IActionResult GetErrorsCountMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
-            return Ok();
+            var metrics = _repository.GetByTimePeriod(fromTime, toTime);
+
+            var response = new DotNetMetricsByTimePeriodResponse()
+            {
+                Metrics = new List<DotNetMetricDto>()
+            };
+
+            foreach (var metric in metrics)
+            {
+                response.Metrics.Add(new DotNetMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+            }
+
+            return Ok(response);
         }
     }
 }

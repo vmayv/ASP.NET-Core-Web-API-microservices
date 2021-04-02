@@ -53,7 +53,35 @@ namespace MetricsAgent.DAL
 
         public IList<DotNetMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            throw new NotImplementedException();
+            var fromDateLong = long.Parse(fromDate.ToString("yyyyMMddHHmmss"));
+            var toDateLong = long.Parse(toDate.ToString("yyyyMMddHHmmss"));
+
+            using var cmd = new SQLiteCommand(_connection);
+
+            // прописываем в команду SQL запрос на получение данных
+            cmd.CommandText = "SELECT * FROM dotnetmetrics WHERE time BETWEEN @fromDateLong AND @toDateLong";
+            cmd.Parameters.AddWithValue("@fromDateLong", fromDateLong);
+            cmd.Parameters.AddWithValue("@toDateLong", toDateLong);
+
+            var returnList = new List<DotNetMetric>();
+
+            using (SQLiteDataReader reader = cmd.ExecuteReader())
+            {
+                // пока есть что читать -- читаем
+                while (reader.Read())
+                {
+                    // добавляем объект в список возврата
+                    returnList.Add(new DotNetMetric
+                    {
+                        Id = reader.GetInt32(0),
+                        Value = reader.GetInt32(1),
+                        // налету преобразуем прочитанный int в DateTimeOffset
+                        Time = DateTimeOffset.Parse(reader.GetString(2))
+                    });
+                }
+            }
+
+            return returnList;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace MetricsAgent.Controllers
         public IActionResult GetMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
-            string from = fromTime.ToString();
+           
             var metrics = _repository.GetByTimePeriod(fromTime, toTime);
             
             var response = new CpuMetricsByTimePeriodResponse()
@@ -49,7 +49,7 @@ namespace MetricsAgent.Controllers
         }
 
         [HttpGet("/from/{fromTime}/to/{toTime}/percentiles/{percentile}")]
-        public IActionResult GetMetricsByPercentile([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime, [FromRoute] Percentile percentile)
+        public IActionResult GetMetricsByPercentile([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime, [FromRoute] Percentile percentile)
         {
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}, percentile = {percentile}");
             return Ok();

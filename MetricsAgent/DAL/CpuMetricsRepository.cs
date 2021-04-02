@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using static ClassLibrary.Class;
 
 namespace MetricsAgent.DAL
 {
     public interface ICpuMetricsRepository : IRepository<CpuMetric>
     {
-
+        IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile);
     }
     public class CpuMetricsRepository : ICpuMetricsRepository
     {
@@ -149,6 +150,11 @@ namespace MetricsAgent.DAL
 
             return returnList;
 
+        }
+
+        public IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile)
+        {
+            throw new NotImplementedException();
         }
     }
 }
