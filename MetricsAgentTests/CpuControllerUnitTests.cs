@@ -38,7 +38,7 @@ namespace MetricsAgentTests
         }
 
         [Fact]
-        public void GetByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
+        public void GetMetricsByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
         {
             // устанавливаем параметр заглушки
             // в заглушке прописываем что в репозиторий прилетит CpuMetric объект
@@ -54,29 +54,29 @@ namespace MetricsAgentTests
 
 
         [Fact]
-        public void GetMetrics_ReturnOk()
+        public void GetMetricsByTimePeriod_ReturnOk()
         {
             //Arrange
-            var fromTime = TimeSpan.FromSeconds(0);
-            var toTime = TimeSpan.FromSeconds(100);
+            var fromTime = new DateTimeOffset(DateTime.Now);
+            var toTime = new DateTimeOffset(DateTime.Now);
 
             //Act
-            var result = _controller.GetMetrics(fromTime, toTime);
+            var result = _controller.GetMetricsByTimePeriod(fromTime, toTime);
 
             //Assert
             _ = Assert.IsAssignableFrom<IActionResult>(result);
         }
 
         [Fact]
-        public void GetMetricsByPercentile_ReturnOk()
+        public void GetMetricsByTimePeriodByPercentile_ReturnOk()
         {
             //Arrange
-            var fromTime = TimeSpan.FromSeconds(0);
-            var toTime = TimeSpan.FromSeconds(100);
+            var fromTime = new DateTimeOffset(DateTime.Now);
+            var toTime = new DateTimeOffset(DateTime.Now);
             var percentile = ClassLibrary.Class.Percentile.P75;
 
             //Act
-            var result = _controller.GetMetricsByPercentile(fromTime, toTime, percentile);
+            var result = _controller.GetMetricsByTimePeriodByPercentile(fromTime, toTime, percentile);
 
             //Assert
             _ = Assert.IsAssignableFrom<IActionResult>(result);

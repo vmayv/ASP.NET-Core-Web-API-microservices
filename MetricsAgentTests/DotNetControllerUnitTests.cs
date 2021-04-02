@@ -1,5 +1,9 @@
 ﻿using MetricsAgent.Controllers;
+using MetricsAgent.DAL;
+using MetricsAgent.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,21 +14,40 @@ namespace MetricsAgentTests
     public class DotNetControllerUnitTests
     {
         private DotNetMetricsController _controller;
+        private Mock<IDotNetMetricsRepository> _mockRepository;
+        private Mock<ILogger<DotNetMetricsController>> _mockLogger;
 
         public DotNetControllerUnitTests()
         {
-            _controller = new DotNetMetricsController();
+            _mockRepository = new Mock<IDotNetMetricsRepository>();
+            _mockLogger = new Mock<ILogger<DotNetMetricsController>>();
+            _controller = new DotNetMetricsController(_mockRepository.Object, _mockLogger.Object);
+        }
+
+        [Fact]
+        public void Create_ShouldCall_Create_From_Repository()
+        {
+            // устанавливаем параметр заглушки
+            // в заглушке прописываем что в репозиторий прилетит CpuMetric объект
+            _mockRepository.Setup(repository => repository.Create(It.IsAny<DotNetMetric>())).Verifiable();
+
+            // выполняем действие на контроллере
+            var result = _controller.Create(new MetricsAgent.Requests.DotNetMetricCreateRequest { Time = new DateTimeOffset(DateTime.Now), Value = 50 });
+
+            // проверяем заглушку на то, что пока работал контроллер
+            // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
+            _mockRepository.Verify(repository => repository.Create(It.IsAny<DotNetMetric>()), Times.Once());
         }
 
         [Fact]
         public void GetErrorsCountMetrics_ReturnOk()
         {
             //Arrange
-            var fromTime = new TimeSpan(0);
-            var toTime = new TimeSpan(100);
+            var fromTime = new DateTimeOffset(DateTime.Now);
+            var toTime = new DateTimeOffset(DateTime.Now);
 
             //Act
-            var result = _controller.GetErrorsCountMetrics(fromTime, toTime);
+            var result = _controller.GetErrorsCountMetricsByTimePeriod(fromTime, toTime);
 
             //Assert
             _ = Assert.IsAssignableFrom<IActionResult>(result);
