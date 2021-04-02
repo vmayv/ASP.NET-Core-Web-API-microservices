@@ -22,7 +22,22 @@ namespace MetricsAgent.DAL
         }
         public void Create(HddMetric item)
         {
-            throw new NotImplementedException();
+            // создаем команду
+            using var cmd = new SQLiteCommand(_connection);
+            // прописываем в команду SQL запрос на вставку данных
+            cmd.CommandText = "INSERT INTO hddmetrics(value, time) VALUES(@value, @time)";
+
+            // добавляем параметры в запрос из нашего объекта
+            cmd.Parameters.AddWithValue("@value", item.Value);
+
+            // в таблице будем хранить время в секундах, потому преобразуем перед записью в секунды
+            // через свойство
+            cmd.Parameters.AddWithValue("@time", item.Time);
+            // подготовка команды к выполнению
+            cmd.Prepare();
+
+            // выполнение команды
+            cmd.ExecuteNonQuery();
         }
 
         public IList<HddMetric> GetAll()
