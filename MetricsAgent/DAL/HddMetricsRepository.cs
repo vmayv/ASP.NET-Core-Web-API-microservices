@@ -9,7 +9,7 @@ namespace MetricsAgent.DAL
 {
     public interface IHddMetricsRepository : IRepository<HddMetric>
     {
-
+        IList<HddMetric> GetLast();
     }
     public class HddMetricsRepository : IHddMetricsRepository
     {
@@ -40,17 +40,12 @@ namespace MetricsAgent.DAL
             cmd.ExecuteNonQuery();
         }
 
-        public IList<HddMetric> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public HddMetric GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<HddMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<HddMetric> GetLast()
         {
             throw new NotImplementedException();
         }

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using static ClassLibrary.Class;
 
 namespace MetricsAgent.DAL
 {
     public interface IDotNetMetricsRepository : IRepository<DotNetMetric>
     {
-
     }
     public class DotNetMetricsRepository : IDotNetMetricsRepository
     {
@@ -39,16 +39,6 @@ namespace MetricsAgent.DAL
 
             // выполнение команды
             cmd.ExecuteNonQuery();
-        }
-
-        public IList<DotNetMetric> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DotNetMetric GetById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public IList<DotNetMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)

@@ -9,7 +9,6 @@ namespace MetricsAgent.DAL
 {
     public interface INetworkMetricsRepository : IRepository<NetworkMetric>
     {
-
     }
     public class NetworkMetricsRepository : INetworkMetricsRepository
     {
@@ -38,16 +37,6 @@ namespace MetricsAgent.DAL
 
             // выполнение команды
             cmd.ExecuteNonQuery();
-        }
-
-        public IList<NetworkMetric> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public NetworkMetric GetById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public IList<NetworkMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)

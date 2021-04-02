@@ -9,7 +9,7 @@ namespace MetricsAgent.DAL
 {
     public interface IRamMetricsRepository : IRepository<RamMetric>
     {
-
+        IList<RamMetric> GetLast();
     }
     public class RamMetricsRepository : IRamMetricsRepository
     {
@@ -40,17 +40,12 @@ namespace MetricsAgent.DAL
             cmd.ExecuteNonQuery();
         }
 
-        public IList<RamMetric> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public RamMetric GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<RamMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<RamMetric> GetLast()
         {
             throw new NotImplementedException();
         }

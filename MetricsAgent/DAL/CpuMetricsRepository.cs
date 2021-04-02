@@ -93,31 +93,6 @@ namespace MetricsAgent.DAL
             return returnList;
         }
 
-        public CpuMetric GetById(int id)
-        {
-            using var cmd = new SQLiteCommand(_connection);
-            cmd.CommandText = "SELECT * FROM cpumetrics WHERE id=@id";
-            using (SQLiteDataReader reader = cmd.ExecuteReader())
-            {
-                // если удалось что то прочитать
-                if (reader.Read())
-                {
-                    // возвращаем прочитанное
-                    return new CpuMetric
-                    {
-                        Id = reader.GetInt32(0),
-                        Value = reader.GetInt32(1),
-                        Time = DateTimeOffset.Parse(reader.GetString(2))
-                    };
-                }
-                else
-                {
-                    // не нашлось запись по идентификатору, не делаем ничего
-                    return null;
-                }
-            }
-        }
-
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
             var fromDateLong = long.Parse(fromDate.ToString("yyyyMMddHHmmss"));
