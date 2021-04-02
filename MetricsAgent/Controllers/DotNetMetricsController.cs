@@ -28,7 +28,7 @@ namespace MetricsAgent.Controllers
         }
 
         [HttpGet("/errors-count/from/{fromTime}/to/{toTime}")]
-        public IActionResult GetErrorsCountMetricsByTimePeriod([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
+        public IActionResult GetMetricsByTimePeriod([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             var metrics = _repository.GetByTimePeriod(fromTime, toTime);
 

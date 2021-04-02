@@ -28,7 +28,7 @@ namespace MetricsAgentTests
         public void Create_ShouldCall_Create_From_Repository()
         {
             // устанавливаем параметр заглушки
-            // в заглушке прописываем что в репозиторий прилетит CpuMetric объект
+            // в заглушке прописываем что в репозиторий прилетит DotNetMetric объект
             _mockRepository.Setup(repository => repository.Create(It.IsAny<DotNetMetric>())).Verifiable();
 
             // выполняем действие на контроллере
@@ -40,6 +40,21 @@ namespace MetricsAgentTests
         }
 
         [Fact]
+        public void GetErrorsCountMetricsByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
+        {
+            // устанавливаем параметр заглушки
+            // в заглушке прописываем что в репозиторий прилетит DotNetMetric объект
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Verifiable();
+
+            // выполняем действие на контроллере
+            var result = _controller.GetMetricsByTimePeriod(new DateTimeOffset(DateTime.Now), new DateTimeOffset(DateTime.Now));
+
+            // проверяем заглушку на то, что пока работал контроллер
+            // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
+            _mockRepository.Verify(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()), Times.Once());
+        }
+
+        [Fact]
         public void GetErrorsCountMetrics_ReturnOk()
         {
             //Arrange
@@ -47,7 +62,7 @@ namespace MetricsAgentTests
             var toTime = new DateTimeOffset(DateTime.Now);
 
             //Act
-            var result = _controller.GetErrorsCountMetricsByTimePeriod(fromTime, toTime);
+            var result = _controller.GetMetricsByTimePeriod(fromTime, toTime);
 
             //Assert
             _ = Assert.IsAssignableFrom<IActionResult>(result);

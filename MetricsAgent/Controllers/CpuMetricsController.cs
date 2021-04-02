@@ -22,7 +22,7 @@ namespace MetricsAgent.Controllers
         private ICpuMetricsRepository _repository;
 
 
-        public CpuMetricsController(ILogger<CpuMetricsController> logger, ICpuMetricsRepository repository)
+        public CpuMetricsController(ICpuMetricsRepository repository, ILogger<CpuMetricsController> logger)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в CpuMetricsController");

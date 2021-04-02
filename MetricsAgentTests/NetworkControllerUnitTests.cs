@@ -28,7 +28,7 @@ namespace MetricsAgentTests
         public void Create_ShouldCall_Create_From_Repository()
         {
             // устанавливаем параметр заглушки
-            // в заглушке прописываем что в репозиторий прилетит CpuMetric объект
+            // в заглушке прописываем что в репозиторий прилетит NetworkMetric объект
             _mockRepository.Setup(repository => repository.Create(It.IsAny<NetworkMetric>())).Verifiable();
 
             // выполняем действие на контроллере
@@ -37,6 +37,21 @@ namespace MetricsAgentTests
             // проверяем заглушку на то, что пока работал контроллер
             // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
             _mockRepository.Verify(repository => repository.Create(It.IsAny<NetworkMetric>()), Times.Once());
+        }
+
+        [Fact]
+        public void GetMetricsByTimePeriod_ShouldCall_GetByTimePeriod_From_Repository()
+        {
+            // устанавливаем параметр заглушки
+            // в заглушке прописываем что в репозиторий прилетит NetworkMetric объект
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Verifiable();
+
+            // выполняем действие на контроллере
+            var result = _controller.GetMetricsByTimePeriod(new DateTimeOffset(DateTime.Now), new DateTimeOffset(DateTime.Now));
+
+            // проверяем заглушку на то, что пока работал контроллер
+            // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
+            _mockRepository.Verify(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()), Times.Once());
         }
 
         [Fact]

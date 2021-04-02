@@ -19,7 +19,7 @@ namespace MetricsAgentTests
         {
             _mockRepository = new Mock<ICpuMetricsRepository>();
             _mockLogger = new Mock<ILogger<CpuMetricsController>>();
-            _controller = new CpuMetricsController(_mockLogger.Object, _mockRepository.Object);
+            _controller = new CpuMetricsController(_mockRepository.Object, _mockLogger.Object);
         }
 
         [Fact]
