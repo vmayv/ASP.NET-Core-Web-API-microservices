@@ -44,7 +44,7 @@ namespace MetricsAgent.Controllers
         }
 
         [HttpGet("/left/from/{fromTime}/to/{toTime}")]
-        public IActionResult GetMetrics([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
+        public IActionResult GetMetricsByTimePeriod([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
             var metrics = _repository.GetByTimePeriod(fromTime, toTime);
 
