@@ -45,7 +45,7 @@ namespace MetricsAgentTests
         {
             // устанавливаем параметр заглушки
             // в заглушке прописываем что в репозиторий прилетит RamMetric объект
-            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Verifiable();
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Returns(new List<RamMetric>());
 
             // выполняем действие на контроллере
             var result = _controller.GetMetricsByTimePeriod(new DateTimeOffset(DateTime.Now), new DateTimeOffset(DateTime.Now));
@@ -59,7 +59,7 @@ namespace MetricsAgentTests
         public void GetAvailableRam_ShouldCall_GetLast_From_Repository()
         {
             // устанавливаем параметр заглушки
-            _mockRepository.Setup(repository => repository.GetLast());
+            _mockRepository.Setup(repository => repository.GetLast()).Returns(new RamMetric());
 
             // выполняем действие на контроллере
             var result = _controller.GetAvailableRam();
@@ -73,7 +73,7 @@ namespace MetricsAgentTests
         public void GetAvailableRam_ReturnsOk()
         {
             //Arrange
-
+            _mockRepository.Setup(repository => repository.GetLast()).Returns(new RamMetric()).Verifiable();
             //Act
             var result = _controller.GetAvailableRam();
 
@@ -87,6 +87,7 @@ namespace MetricsAgentTests
             //Arrange
             var fromTime = new DateTimeOffset(DateTime.Now);
             var toTime = new DateTimeOffset(DateTime.Now);
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Returns(new List<RamMetric>());
 
             //Act
             var result = _controller.GetMetricsByTimePeriod(fromTime, toTime);

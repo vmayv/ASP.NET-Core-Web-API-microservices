@@ -44,7 +44,7 @@ namespace MetricsAgentTests
         {
             // устанавливаем параметр заглушки
             // в заглушке прописываем что в репозиторий прилетит NetworkMetric объект
-            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Verifiable();
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Returns(new List<NetworkMetric>()).Verifiable();
 
             // выполняем действие на контроллере
             var result = _controller.GetMetricsByTimePeriod(new DateTimeOffset(DateTime.Now), new DateTimeOffset(DateTime.Now));
@@ -60,6 +60,7 @@ namespace MetricsAgentTests
             //Arrange
             var fromTime = new DateTimeOffset(DateTime.Now);
             var toTime = new DateTimeOffset(DateTime.Now);
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Returns(new List<NetworkMetric>());
 
             //Act
             var result = _controller.GetMetricsByTimePeriod(fromTime, toTime);

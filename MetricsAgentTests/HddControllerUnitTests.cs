@@ -44,7 +44,7 @@ namespace MetricsAgentTests
         {
             // устанавливаем параметр заглушки
             // в заглушке прописываем что в репозиторий прилетит HddMetric объект
-            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Verifiable();
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Returns(new List<HddMetric>()).Verifiable();
 
             // выполняем действие на контроллере
             var result = _controller.GetMetricsByTimePeriod(new DateTimeOffset(DateTime.Now), new DateTimeOffset(DateTime.Now));
@@ -58,7 +58,7 @@ namespace MetricsAgentTests
         public void GetHddLeft_ShouldCall_GetLast_From_Repository()
         {
             // устанавливаем параметр заглушки
-            _mockRepository.Setup(repository => repository.GetLast());
+            _mockRepository.Setup(repository => repository.GetLast()).Returns(new HddMetric()).Verifiable();
 
             // выполняем действие на контроллере
             var result = _controller.GetHddLeft();
@@ -72,6 +72,7 @@ namespace MetricsAgentTests
         public void GetHddLeft_ReturnOk()
         {
             //Arrange
+            _mockRepository.Setup(repository => repository.GetLast()).Returns(new HddMetric());
 
             //Act
             var result = _controller.GetHddLeft();
@@ -86,6 +87,7 @@ namespace MetricsAgentTests
             //Arrange
             var fromTime = new DateTimeOffset(DateTime.Now);
             var toTime = new DateTimeOffset(DateTime.Now);
+            _mockRepository.Setup(repository => repository.GetByTimePeriod(It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).Returns(new List<HddMetric>());
 
             //Act
             var result = _controller.GetMetricsByTimePeriod(fromTime, toTime);
