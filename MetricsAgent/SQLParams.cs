@@ -7,6 +7,6 @@ namespace MetricsAgent
 {
     public static class SQLParams
     {
-        public static string connectionString = @"Data Source=:memory:; Version=3;Pooling=True;Max Pool Size=100;";
+        public static string ConnectionString = @"Data Source=metrics.db; Version=3;Pooling=True;Max Pool Size=100;";
     }
 }

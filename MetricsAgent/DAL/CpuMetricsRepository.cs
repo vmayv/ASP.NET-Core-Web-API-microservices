@@ -19,14 +19,14 @@ namespace MetricsAgent.DAL
         private SQLiteConnection _connection;
 
         // инжектируем соединение с базой данных в наш репозиторий через конструктор
-        public CpuMetricsRepository(SQLiteConnection connection)
+        public CpuMetricsRepository()
         {
-            _connection = connection;
+            SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
         }
 
         public void Create(CpuMetric item)
         {
-            using (var connection = new SQLiteConnection(SQLParams.connectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                 //  запрос на вставку данных с плейсхолдерами для параметров
                 connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)",
@@ -65,7 +65,7 @@ namespace MetricsAgent.DAL
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }*/
-        
+
         public IList<CpuMetric> GetAll()
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -96,8 +96,17 @@ namespace MetricsAgent.DAL
 
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            using var cmd = new SQLiteCommand(_connection);
-
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
+            {
+                return connection.Query<IList<CpuMetric>>("SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong",
+                    new
+                    {
+                        fromDateLong = fromDate.Ticks,
+                        toDateLong = toDate.Ticks
+                    });
+            }
+        }
+            /*
             // прописываем в команду SQL запрос на получение данных
             cmd.CommandText = "SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong";
             cmd.Parameters.AddWithValue("@fromDateLong", fromDate.Ticks);
@@ -123,12 +132,12 @@ namespace MetricsAgent.DAL
 
             return returnList;
 
-        }
+        }*/
 
-        public IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile)
-        {
-            throw new NotImplementedException();
+            public IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
-}
 
