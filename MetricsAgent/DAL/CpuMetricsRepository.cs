@@ -98,12 +98,12 @@ namespace MetricsAgent.DAL
         {
             using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
-                return connection.Query<IList<CpuMetric>>("SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong",
+                return connection.Query<CpuMetric>("SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong",
                     new
                     {
                         fromDateLong = fromDate.Ticks,
                         toDateLong = toDate.Ticks
-                    });
+                    }).ToList();
             }
         }
             /*
