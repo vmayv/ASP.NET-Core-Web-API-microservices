@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using static ClassLibrary.Class;
+using Dapper;
 
 namespace MetricsAgent.DAL
 {
@@ -25,22 +26,21 @@ namespace MetricsAgent.DAL
 
         public void Create(CpuMetric item)
         {
-            // создаем команду
-            using var cmd = new SQLiteCommand(_connection);
-            // прописываем в команду SQL запрос на вставку данных
-            cmd.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(@value, @time)";
+            using (var connection = new SQLiteConnection(SQLParams.connectionString))
+            {
+                //  запрос на вставку данных с плейсхолдерами для параметров
+                connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)",
+                    // анонимный объект с параметрами запроса
+                    new
+                    {
+                        // value подставится на место "@value" в строке запроса
+                        // значение запишется из поля Value объекта item
+                        value = item.Value,
 
-            // добавляем параметры в запрос из нашего объекта
-            cmd.Parameters.AddWithValue("@value", item.Value);
-
-            // в таблице будем хранить время в int, потому преобразуем перед записью в int
-            // через свойство
-            cmd.Parameters.AddWithValue("@time", item.Time.Ticks);
-            // подготовка команды к выполнению
-            cmd.Prepare();
-
-            // выполнение команды
-            cmd.ExecuteNonQuery();
+                        // записываем в поле time количество секунд
+                        time = item.Time.Ticks
+                    });
+            }
         }
         /*
         public void Delete(int id)

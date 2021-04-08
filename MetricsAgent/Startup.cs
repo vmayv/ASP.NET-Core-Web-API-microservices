@@ -38,8 +38,8 @@ namespace MetricsAgent
 
         private void ConfigureSqlLiteConnection(IServiceCollection services)
         {
-            string connectionString = "Data Source=:memory:";
-            var connection = new SQLiteConnection(connectionString);
+            //string connectionString = "Data Source=:memory:";
+            var connection = new SQLiteConnection(SQLParams.connectionString);
             connection.Open();
             PrepareSchema(connection);
             services.AddSingleton(connection);
