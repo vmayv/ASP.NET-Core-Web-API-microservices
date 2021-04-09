@@ -51,11 +51,7 @@ namespace MetricsAgent.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody] DotNetMetricCreateRequest request)
         {
-            _repository.Create(new DotNetMetric
-            {
-                Time = request.Time,
-                Value = request.Value
-            });
+            _repository.Create(_mapper.Map<DotNetMetric>(request));
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }

@@ -35,12 +35,7 @@ namespace MetricsAgent.Controllers
         {
             var metrics = _repository.GetLast();
 
-            var response = new RamMetricsGetLastResponse()
-            {
-                Id = metrics.Id,
-                Value = metrics.Value,
-                Time = metrics.Time
-            };
+            var response = _mapper.Map<RamMetricsGetLastResponse>(metrics);
 
             _logger.LogInformation($"GET");
             return Ok(response);
@@ -67,11 +62,7 @@ namespace MetricsAgent.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody] RamMetricCreateRequest request)
         {
-            _repository.Create(new RamMetric
-            {
-                Time = request.Time,
-                Value = request.Value
-            });
+            _repository.Create(_mapper.Map<RamMetric>(request));
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }

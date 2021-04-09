@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
+using MetricsAgent.Requests;
+using MetricsAgent.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +19,14 @@ namespace MetricsAgent
             CreateMap<HddMetric, HddMetricDto>();
             CreateMap<NetworkMetric, NetworkMetricDto>();
             CreateMap<RamMetric, RamMetricDto>();
+            CreateMap<RamMetric, RamMetricsGetLastResponse>();
+            CreateMap<HddMetric, HddMetricsGetLastResponse>();
 
-            CreateMap<CpuMetricDto, CpuMetric>();
-            CreateMap<DotNetMetricDto, DotNetMetric>();
-            CreateMap<HddMetricDto, HddMetric>();
-            CreateMap<NetworkMetricDto, NetworkMetric>();
-            CreateMap<RamMetricDto, RamMetric>();
+            CreateMap<CpuMetricCreateRequest, CpuMetric>();
+            CreateMap<DotNetMetricCreateRequest, DotNetMetric>();
+            CreateMap<HddMetricCreateRequest, HddMetric>();
+            CreateMap<NetworkMetricCreateRequest, NetworkMetric>();
+            CreateMap<RamMetricCreateRequest, RamMetric>();
         }
 
     }

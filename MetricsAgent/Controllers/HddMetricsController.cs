@@ -35,12 +35,7 @@ namespace MetricsAgent.Controllers
         {
             var metrics = _repository.GetLast();
 
-            var response = new HddMetricsGetLastResponse()
-            {
-                Id = metrics.Id,
-                Value = metrics.Value,
-                Time = metrics.Time
-            };
+            var response = _mapper.Map<HddMetricsGetLastResponse>(metrics);
             _logger.LogInformation($"GET");
             return Ok(response);
         }
