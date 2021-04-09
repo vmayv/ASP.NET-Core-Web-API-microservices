@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Interfaces;
 
-namespace MetricsAgent.DAL
+namespace MetricsAgent.DAL.Repositories
 {
     public interface IRamMetricsRepository : IRepository<RamMetric>
     {

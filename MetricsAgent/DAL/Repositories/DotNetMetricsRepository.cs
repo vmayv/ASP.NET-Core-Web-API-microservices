@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static Core.Class;
 using Core.Interfaces;
 
-namespace MetricsAgent.DAL
+namespace MetricsAgent.DAL.Repositories
 {
     public interface IDotNetMetricsRepository : IRepository<DotNetMetric>
     {

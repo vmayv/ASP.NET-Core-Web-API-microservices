@@ -8,7 +8,7 @@ using static Core.Class;
 using Dapper;
 using Core.Interfaces;
 
-namespace MetricsAgent.DAL
+namespace MetricsAgent.DAL.Repositories
 {
     public interface ICpuMetricsRepository : IRepository<CpuMetric>
     {
