@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
 using MetricsAgent.Requests;
@@ -18,13 +19,15 @@ namespace MetricsAgent.Controllers
     public class RamMetricsController : ControllerBase
     {
         private readonly ILogger<RamMetricsController> _logger;
+        private readonly IMapper _mapper;
         private IRamMetricsRepository _repository;
 
-        public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger)
+        public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger, IMapper mapper)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в RamMetricsController");
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet("avaliable/")]
@@ -55,7 +58,7 @@ namespace MetricsAgent.Controllers
 
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new RamMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+                response.Metrics.Add(_mapper.Map<RamMetricDto>(metric));
             }
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok(response);

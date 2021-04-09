@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
 using MetricsAgent.Requests;
@@ -19,14 +20,16 @@ namespace MetricsAgent.Controllers
     public class CpuMetricsController : ControllerBase
     {
         private readonly ILogger<CpuMetricsController> _logger;
+        private readonly IMapper _mapper;
         private ICpuMetricsRepository _repository;
 
 
-        public CpuMetricsController(ICpuMetricsRepository repository, ILogger<CpuMetricsController> logger)
+        public CpuMetricsController(ICpuMetricsRepository repository, ILogger<CpuMetricsController> logger, IMapper mapper)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в CpuMetricsController");
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet("from/{fromTime}/to/{toTime}")]
@@ -41,7 +44,7 @@ namespace MetricsAgent.Controllers
 
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new CpuMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+                response.Metrics.Add(_mapper.Map<CpuMetricDto>(metric));
             }
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok(response);

@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
 using MetricsAgent.Requests;
@@ -18,13 +19,15 @@ namespace MetricsAgent.Controllers
     public class NetworkMetricsController : ControllerBase
     {
         private readonly ILogger<NetworkMetricsController> _logger;
+        private readonly IMapper _mapper;
         private INetworkMetricsRepository _repository;
 
-        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger<NetworkMetricsController> logger)
+        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger<NetworkMetricsController> logger, IMapper mapper)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в NetworkMetricsController");
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet("/from/{fromTime}/to/{toTime}")]
@@ -39,7 +42,7 @@ namespace MetricsAgent.Controllers
 
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new NetworkMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+                response.Metrics.Add(_mapper.Map<NetworkMetricDto>(metric));
             }
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok(response);
