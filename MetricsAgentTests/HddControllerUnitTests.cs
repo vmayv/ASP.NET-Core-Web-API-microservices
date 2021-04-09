@@ -1,5 +1,6 @@
-﻿using MetricsAgent.Controllers;
-using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.Controllers;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,12 +17,13 @@ namespace MetricsAgentTests
         private HddMetricsController _controller;
         private Mock<IHddMetricsRepository> _mockRepository;
         private Mock<ILogger<HddMetricsController>> _mockLogger;
+        private Mock<IMapper> _mockMapper;
 
         public HddControllerUnitTests()
         {
             _mockRepository = new Mock<IHddMetricsRepository>();
             _mockLogger = new Mock<ILogger<HddMetricsController>>();
-            _controller = new HddMetricsController(_mockRepository.Object, _mockLogger.Object);
+            _controller = new HddMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
         [Fact]
