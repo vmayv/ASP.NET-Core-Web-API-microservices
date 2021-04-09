@@ -27,8 +27,8 @@ namespace MetricsAgent.Controllers
             _repository = repository;
         }
 
-        [HttpGet("/avaliable/")]
-        public IActionResult GetAvailableRam()
+        [HttpGet("avaliable/")]
+        public IActionResult GetAvaliableRam()
         {
             var metrics = _repository.GetLast();
 

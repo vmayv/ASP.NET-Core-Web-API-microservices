@@ -12,13 +12,10 @@ namespace MetricsAgent.DAL
     public interface ICpuMetricsRepository : IRepository<CpuMetric>
     {
         IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile);
-        IList<CpuMetric> GetAll();
+        //IList<CpuMetric> GetAll();
     }
     public class CpuMetricsRepository : ICpuMetricsRepository
     {
-        private SQLiteConnection _connection;
-
-        // инжектируем соединение с базой данных в наш репозиторий через конструктор
         public CpuMetricsRepository()
         {
             SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
@@ -65,7 +62,7 @@ namespace MetricsAgent.DAL
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }*/
-
+        /*
         public IList<CpuMetric> GetAll()
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -92,7 +89,7 @@ namespace MetricsAgent.DAL
             }
 
             return returnList;
-        }
+        }*/
 
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {

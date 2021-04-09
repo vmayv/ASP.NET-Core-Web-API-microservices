@@ -65,7 +65,7 @@ namespace MetricsAgent.Controllers
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }
-        /*для тестирования ответов*/
+        /*для тестирования ответов
         [HttpGet("all")]
         public IActionResult GetAll()
         
@@ -83,7 +83,7 @@ namespace MetricsAgent.Controllers
             }
 
             return Ok(response);
-        }
+        }*/
     }
 
 }
