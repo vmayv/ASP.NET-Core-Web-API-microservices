@@ -74,7 +74,7 @@ namespace MetricsAgentTests
             //Arrange
             var fromTime = new DateTimeOffset(DateTime.Now);
             var toTime = new DateTimeOffset(DateTime.Now);
-            var percentile = ClassLibrary.Class.Percentile.P75;
+            var percentile = Core.Class.Percentile.P75;
 
             //Act
             var result = _controller.GetMetricsByTimePeriodByPercentile(fromTime, toTime, percentile);

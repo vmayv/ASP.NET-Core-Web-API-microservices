@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClassLibrary
+namespace Core
 {
     public class Class
     {

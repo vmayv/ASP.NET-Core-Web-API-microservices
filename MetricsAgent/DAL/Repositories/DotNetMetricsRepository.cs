@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using static ClassLibrary.Class;
+using static Core.Class;
 
 namespace MetricsAgent.DAL
 {

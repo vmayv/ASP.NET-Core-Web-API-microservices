@@ -62,7 +62,7 @@ namespace MetricsAgentTests
             _mockRepository.Setup(repository => repository.GetLast()).Returns(new RamMetric());
 
             // выполняем действие на контроллере
-            var result = _controller.GetAvailableRam();
+            var result = _controller.GetAvaliableRam();
 
             // проверяем заглушку на то, что пока работал контроллер
             // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
@@ -75,7 +75,7 @@ namespace MetricsAgentTests
             //Arrange
             _mockRepository.Setup(repository => repository.GetLast()).Returns(new RamMetric()).Verifiable();
             //Act
-            var result = _controller.GetAvailableRam();
+            var result = _controller.GetAvaliableRam();
 
             //Assert
             _ = Assert.IsAssignableFrom<IActionResult>(result);
