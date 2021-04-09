@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static Core.Class;
 using Dapper;
+using Core.Interfaces;
 
 namespace MetricsAgent.DAL
 {

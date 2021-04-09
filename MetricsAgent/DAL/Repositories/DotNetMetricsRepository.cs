@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using static Core.Class;
+using Core.Interfaces;
 
 namespace MetricsAgent.DAL
 {
