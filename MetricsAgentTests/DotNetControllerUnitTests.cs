@@ -21,6 +21,7 @@ namespace MetricsAgentTests
 
         public DotNetControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<IDotNetMetricsRepository>();
             _mockLogger = new Mock<ILogger<DotNetMetricsController>>();
             _controller = new DotNetMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);

@@ -21,6 +21,7 @@ namespace MetricsAgentTests
 
         public HddControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<IHddMetricsRepository>();
             _mockLogger = new Mock<ILogger<HddMetricsController>>();
             _controller = new HddMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);

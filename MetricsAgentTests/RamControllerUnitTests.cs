@@ -22,6 +22,7 @@ namespace MetricsAgentTests
 
         public RamControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<IRamMetricsRepository>();
             _mockLogger = new Mock<ILogger<RamMetricsController>>();
             _controller = new RamMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);

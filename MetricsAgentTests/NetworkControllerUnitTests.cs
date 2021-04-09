@@ -21,6 +21,7 @@ namespace MetricsAgentTests
 
         public NetworkControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<INetworkMetricsRepository>();
             _mockLogger = new Mock<ILogger<NetworkMetricsController>>();
             _controller = new NetworkMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
