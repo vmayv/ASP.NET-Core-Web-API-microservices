@@ -1,5 +1,6 @@
+using AutoMapper;
 using MetricsAgent.Controllers;
-using MetricsAgent.DAL;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,12 +16,14 @@ namespace MetricsAgentTests
         private CpuMetricsController _controller;
         private Mock<ICpuMetricsRepository> _mockRepository;
         private Mock<ILogger<CpuMetricsController>> _mockLogger;
+        private Mock<IMapper> _mockMapper;
 
         public CpuControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<ICpuMetricsRepository>();
             _mockLogger = new Mock<ILogger<CpuMetricsController>>();
-            _controller = new CpuMetricsController(_mockRepository.Object, _mockLogger.Object);
+            _controller = new CpuMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
         [Fact]
@@ -74,7 +77,7 @@ namespace MetricsAgentTests
             //Arrange
             var fromTime = new DateTimeOffset(DateTime.Now);
             var toTime = new DateTimeOffset(DateTime.Now);
-            var percentile = ClassLibrary.Class.Percentile.P75;
+            var percentile = Core.Class.Percentile.P75;
 
             //Act
             var result = _controller.GetMetricsByTimePeriodByPercentile(fromTime, toTime, percentile);

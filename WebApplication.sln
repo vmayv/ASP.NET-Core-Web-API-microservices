@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary", "ClassLibrary\ClassLibrary.csproj", "{251C70A3-3791-4D4F-8572-CBEA9FBD5059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "ClassLibrary\Core.csproj", "{251C70A3-3791-4D4F-8572-CBEA9FBD5059}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsManagerTests", "MetricsManagerTests\MetricsManagerTests.csproj", "{FF0DFC4B-2CB9-4972-8E57-AE876F463060}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsAgent", "MetricsAgen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsManager", "MetricsManager\MetricsManager.csproj", "{75982B8C-E7C0-4D8A-9F3C-343ED0C35582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsAgentTests", "MetricsAgentTests\MetricsAgentTests.csproj", "{4DF1FB85-F3B7-40A1-880E-13A3039F87E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsAgentTests", "MetricsAgentTests\MetricsAgentTests.csproj", "{4DF1FB85-F3B7-40A1-880E-13A3039F87E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

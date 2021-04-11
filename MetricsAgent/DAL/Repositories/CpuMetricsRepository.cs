@@ -4,43 +4,41 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using static ClassLibrary.Class;
+using static Core.Class;
+using Dapper;
+using Core.Interfaces;
 
-namespace MetricsAgent.DAL
+namespace MetricsAgent.DAL.Repositories
 {
     public interface ICpuMetricsRepository : IRepository<CpuMetric>
     {
         IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile);
-        IList<CpuMetric> GetAll();
+        //IList<CpuMetric> GetAll();
     }
     public class CpuMetricsRepository : ICpuMetricsRepository
     {
-        private SQLiteConnection _connection;
-
-        // инжектируем соединение с базой данных в наш репозиторий через конструктор
-        public CpuMetricsRepository(SQLiteConnection connection)
+        public CpuMetricsRepository()
         {
-            _connection = connection;
+            SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
         }
 
         public void Create(CpuMetric item)
         {
-            // создаем команду
-            using var cmd = new SQLiteCommand(_connection);
-            // прописываем в команду SQL запрос на вставку данных
-            cmd.CommandText = "INSERT INTO cpumetrics(value, time) VALUES(@value, @time)";
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
+            {
+                //  запрос на вставку данных с плейсхолдерами для параметров
+                connection.Execute("INSERT INTO cpumetrics(value, time) VALUES(@value, @time)",
+                    // анонимный объект с параметрами запроса
+                    new
+                    {
+                        // value подставится на место "@value" в строке запроса
+                        // значение запишется из поля Value объекта item
+                        value = item.Value,
 
-            // добавляем параметры в запрос из нашего объекта
-            cmd.Parameters.AddWithValue("@value", item.Value);
-
-            // в таблице будем хранить время в int, потому преобразуем перед записью в int
-            // через свойство
-            cmd.Parameters.AddWithValue("@time", item.Time.Ticks);
-            // подготовка команды к выполнению
-            cmd.Prepare();
-
-            // выполнение команды
-            cmd.ExecuteNonQuery();
+                        // записываем в поле time количество секунд
+                        time = item.Time.Ticks
+                    });
+            }
         }
         /*
         public void Delete(int id)
@@ -65,7 +63,7 @@ namespace MetricsAgent.DAL
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }*/
-        
+        /*
         public IList<CpuMetric> GetAll()
         {
             using var cmd = new SQLiteCommand(_connection);
@@ -92,12 +90,21 @@ namespace MetricsAgent.DAL
             }
 
             return returnList;
-        }
+        }*/
 
         public IList<CpuMetric> GetByTimePeriod(DateTimeOffset fromDate, DateTimeOffset toDate)
         {
-            using var cmd = new SQLiteCommand(_connection);
-
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
+            {
+                return connection.Query<CpuMetric>("SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong",
+                    new
+                    {
+                        fromDateLong = fromDate.Ticks,
+                        toDateLong = toDate.Ticks
+                    }).ToList();
+            }
+        }
+            /*
             // прописываем в команду SQL запрос на получение данных
             cmd.CommandText = "SELECT * FROM cpumetrics WHERE time BETWEEN @fromDateLong AND @toDateLong";
             cmd.Parameters.AddWithValue("@fromDateLong", fromDate.Ticks);
@@ -123,12 +130,12 @@ namespace MetricsAgent.DAL
 
             return returnList;
 
-        }
+        }*/
 
-        public IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile)
-        {
-            throw new NotImplementedException();
+            public IList<CpuMetric> GetByTimePeriodPercentile(DateTimeOffset fromDate, DateTimeOffset toDate, Percentile percentile)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
-}
 

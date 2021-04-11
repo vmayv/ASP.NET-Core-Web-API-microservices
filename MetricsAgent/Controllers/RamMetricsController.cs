@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
 using MetricsAgent.Requests;
@@ -18,26 +19,23 @@ namespace MetricsAgent.Controllers
     public class RamMetricsController : ControllerBase
     {
         private readonly ILogger<RamMetricsController> _logger;
+        private readonly IMapper _mapper;
         private IRamMetricsRepository _repository;
 
-        public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger)
+        public RamMetricsController(IRamMetricsRepository repository, ILogger<RamMetricsController> logger, IMapper mapper)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в RamMetricsController");
             _repository = repository;
+            _mapper = mapper;
         }
 
-        [HttpGet("/avaliable/")]
-        public IActionResult GetAvailableRam()
+        [HttpGet("avaliable/")]
+        public IActionResult GetAvaliableRam()
         {
             var metrics = _repository.GetLast();
 
-            var response = new RamMetricsGetLastResponse()
-            {
-                Id = metrics.Id,
-                Value = metrics.Value,
-                Time = metrics.Time
-            };
+            var response = _mapper.Map<RamMetricsGetLastResponse>(metrics);
 
             _logger.LogInformation($"GET");
             return Ok(response);
@@ -55,7 +53,7 @@ namespace MetricsAgent.Controllers
 
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new RamMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+                response.Metrics.Add(_mapper.Map<RamMetricDto>(metric));
             }
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok(response);
@@ -64,11 +62,7 @@ namespace MetricsAgent.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody] RamMetricCreateRequest request)
         {
-            _repository.Create(new RamMetric
-            {
-                Time = request.Time,
-                Value = request.Value
-            });
+            _repository.Create(_mapper.Map<RamMetric>(request));
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }

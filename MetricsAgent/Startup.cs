@@ -1,4 +1,5 @@
-using MetricsAgent.DAL;
+using AutoMapper;
+using MetricsAgent.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,12 +35,16 @@ namespace MetricsAgent
             services.AddScoped<IDotNetMetricsRepository, DotNetMetricsRepository>();
             services.AddScoped<IRamMetricsRepository, RamMetricsRepository>();
             services.AddScoped<IHddMetricsRepository, HddMetricsRepository>();
+
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+            var mapper = mapperConfiguration.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         private void ConfigureSqlLiteConnection(IServiceCollection services)
         {
-            string connectionString = "Data Source=:memory:";
-            var connection = new SQLiteConnection(connectionString);
+            //string connectionString = "Data Source=:memory:";
+            var connection = new SQLiteConnection(SQLParams.ConnectionString);
             connection.Open();
             PrepareSchema(connection);
             services.AddSingleton(connection);
@@ -56,7 +61,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE cpumetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)";
+                    value INT, time INT64)";
                 command.ExecuteNonQuery();
 
 
@@ -65,7 +70,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE dotnetmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)"; ;
+                    value INT, time INT64)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
@@ -75,7 +80,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE hddmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)"; ;
+                    value INT, time INT64)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
@@ -85,7 +90,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE networkmetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)"; ;
+                    value INT, time INT64)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
 
@@ -95,7 +100,7 @@ namespace MetricsAgent
                 command.ExecuteNonQuery();
 
                 command.CommandText = @"CREATE TABLE rammetrics(id INTEGER PRIMARY KEY,
-                    value INT, time INT)"; ;
+                    value INT, time INT64)"; ;
                 // отправляем запрос в базу данных
                 command.ExecuteNonQuery();
             }

@@ -1,5 +1,6 @@
-﻿using MetricsAgent.Controllers;
-using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.Controllers;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,12 +18,14 @@ namespace MetricsAgentTests
         private RamMetricsController _controller;
         private Mock<IRamMetricsRepository> _mockRepository;
         private Mock<ILogger<RamMetricsController>> _mockLogger;
+        private Mock<IMapper> _mockMapper;
 
         public RamControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<IRamMetricsRepository>();
             _mockLogger = new Mock<ILogger<RamMetricsController>>();
-            _controller = new RamMetricsController(_mockRepository.Object, _mockLogger.Object);
+            _controller = new RamMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
         [Fact]
@@ -62,7 +65,7 @@ namespace MetricsAgentTests
             _mockRepository.Setup(repository => repository.GetLast()).Returns(new RamMetric());
 
             // выполняем действие на контроллере
-            var result = _controller.GetAvailableRam();
+            var result = _controller.GetAvaliableRam();
 
             // проверяем заглушку на то, что пока работал контроллер
             // действительно вызвался метод Create репозитория с нужным типом объекта в параметре
@@ -75,7 +78,7 @@ namespace MetricsAgentTests
             //Arrange
             _mockRepository.Setup(repository => repository.GetLast()).Returns(new RamMetric()).Verifiable();
             //Act
-            var result = _controller.GetAvailableRam();
+            var result = _controller.GetAvaliableRam();
 
             //Assert
             _ = Assert.IsAssignableFrom<IActionResult>(result);

@@ -1,5 +1,6 @@
-﻿using MetricsAgent.Controllers;
-using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.Controllers;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,12 +17,14 @@ namespace MetricsAgentTests
         private DotNetMetricsController _controller;
         private Mock<IDotNetMetricsRepository> _mockRepository;
         private Mock<ILogger<DotNetMetricsController>> _mockLogger;
+        private Mock<IMapper> _mockMapper;
 
         public DotNetControllerUnitTests()
         {
+            _mockMapper = new Mock<IMapper>();
             _mockRepository = new Mock<IDotNetMetricsRepository>();
             _mockLogger = new Mock<ILogger<DotNetMetricsController>>();
-            _controller = new DotNetMetricsController(_mockRepository.Object, _mockLogger.Object);
+            _controller = new DotNetMetricsController(_mockRepository.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
         [Fact]

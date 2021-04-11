@@ -1,4 +1,5 @@
-﻿using MetricsAgent.DAL;
+﻿using AutoMapper;
+using MetricsAgent.DAL.Repositories;
 using MetricsAgent.DTO;
 using MetricsAgent.Models;
 using MetricsAgent.Requests;
@@ -18,13 +19,15 @@ namespace MetricsAgent.Controllers
     public class DotNetMetricsController : ControllerBase
     {
         private readonly ILogger<DotNetMetricsController> _logger;
+        private readonly IMapper _mapper;
         private IDotNetMetricsRepository _repository;
 
-        public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger<DotNetMetricsController> logger)
+        public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger<DotNetMetricsController> logger, IMapper mapper)
         {
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в DotNetMetricsController");
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet("/errors-count/from/{fromTime}/to/{toTime}")]
@@ -39,7 +42,7 @@ namespace MetricsAgent.Controllers
 
             foreach (var metric in metrics)
             {
-                response.Metrics.Add(new DotNetMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
+                response.Metrics.Add(_mapper.Map<DotNetMetricDto>(metric));
             }
             _logger.LogInformation($"Parameters: fromTime = {fromTime}, toTime = {toTime}");
             return Ok(response);
@@ -48,11 +51,7 @@ namespace MetricsAgent.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody] DotNetMetricCreateRequest request)
         {
-            _repository.Create(new DotNetMetric
-            {
-                Time = request.Time,
-                Value = request.Value
-            });
+            _repository.Create(_mapper.Map<DotNetMetric>(request));
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }
