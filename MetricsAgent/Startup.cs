@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentMigrator.Runner;
 using MetricsAgent.DAL.Repositories;
+using MetricsAgent.Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -52,6 +56,14 @@ namespace MetricsAgent
                 ).AddLogging(lb => lb
                     .AddFluentMigratorConsole());
 
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            // добавляем нашу задачу
+            services.AddSingleton<CpuMetricJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(CpuMetricJob),
+                cronExpression: "0/5 * * * * ?"));
+            services.AddHostedService<QuartzHostedService>();
         }
 
         /*private void ConfigureSqlLiteConnection(IServiceCollection services)
