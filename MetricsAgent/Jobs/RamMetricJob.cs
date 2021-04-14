@@ -14,11 +14,13 @@ namespace MetricsAgent.Jobs
     {
         private readonly IServiceProvider _provider;
         private IRamMetricsRepository _repository;
+        private PerformanceCounter _ramCounter;
 
         public RamMetricJob(IServiceProvider provider)
         {
             _provider = provider;
             _repository = _provider.GetService<IRamMetricsRepository>();
+            _ramCounter = new PerformanceCounter();
         }
 
         public Task Execute(IJobExecutionContext context)

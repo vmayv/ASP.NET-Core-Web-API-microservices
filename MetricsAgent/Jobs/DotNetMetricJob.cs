@@ -14,11 +14,13 @@ namespace MetricsAgent.Jobs
     {
         private readonly IServiceProvider _provider;
         private IDotNetMetricsRepository _repository;
+        private PerformanceCounter _dotNetCounter;
 
         public DotNetMetricJob(IServiceProvider provider)
         {
             _provider = provider;
             _repository = _provider.GetService<IDotNetMetricsRepository>();
+            _dotNetCounter = new PerformanceCounter();
         }
 
         public Task Execute(IJobExecutionContext context)
