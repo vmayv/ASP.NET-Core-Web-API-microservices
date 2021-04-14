@@ -9,15 +9,15 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MetricsAgent.Jobs
 {
     [DisallowConcurrentExecution]
-    public class CpuMetricJob : IJob
+    public class RamMetricJob : IJob
     {
         private readonly IServiceProvider _provider;
-        private ICpuMetricsRepository _repository;
+        private IRamMetricsRepository _repository;
 
-        public CpuMetricJob(IServiceProvider provider)
+        public RamMetricJob(IServiceProvider provider)
         {
             _provider = provider;
-            _repository = _provider.GetService<ICpuMetricsRepository>();
+            _repository = _provider.GetService<IRamMetricsRepository>();
         }
 
         public Task Execute(IJobExecutionContext context)
