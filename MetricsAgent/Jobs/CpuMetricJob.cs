@@ -12,14 +12,12 @@ namespace MetricsAgent.Jobs
     [DisallowConcurrentExecution]
     public class CpuMetricJob : IJob
     {
-        private readonly IServiceProvider _provider;
         private ICpuMetricsRepository _repository;
         private PerformanceCounter _cpuCounter;
 
-        public CpuMetricJob(IServiceProvider provider)
+        public CpuMetricJob(ICpuMetricsRepository repository)
         {
-            _provider = provider;
-            _repository = _provider.GetService<ICpuMetricsRepository>();
+            _repository = repository;
             _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
         }

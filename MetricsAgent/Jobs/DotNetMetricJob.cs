@@ -12,14 +12,12 @@ namespace MetricsAgent.Jobs
     [DisallowConcurrentExecution]
     public class DotNetMetricJob : IJob
     {
-        private readonly IServiceProvider _provider;
         private IDotNetMetricsRepository _repository;
         private PerformanceCounter _dotNetCounter;
 
-        public DotNetMetricJob(IServiceProvider provider)
+        public DotNetMetricJob(IDotNetMetricsRepository repository)
         {
-            _provider = provider;
-            _repository = _provider.GetService<IDotNetMetricsRepository>();
+            _repository = repository;
             _dotNetCounter = new PerformanceCounter();
         }
 
