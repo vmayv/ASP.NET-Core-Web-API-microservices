@@ -18,11 +18,20 @@ namespace MetricsAgent.Jobs
         public HddMetricJob(IHddMetricsRepository repository)
         {
             _repository = repository;
-            _hddCounter = new PerformanceCounter();
+            _hddCounter = new PerformanceCounter("Логический диск", "% свободного места", "_Total");
         }
 
         public Task Execute(IJobExecutionContext context)
         {
+            var freeSpaceInPercents = Convert.ToInt32(_hddCounter.NextValue());
+
+            // узнаем когда мы сняли значение метрики.
+            var time = DateTimeOffset.UtcNow;
+
+            // теперь можно записать что-то при помощи репозитория
+
+            _repository.Create(new Models.HddMetric { Time = time, Value = freeSpaceInPercents });
+
             return Task.CompletedTask;
         }
     }

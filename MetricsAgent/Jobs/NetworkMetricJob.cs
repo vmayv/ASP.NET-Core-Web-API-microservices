@@ -18,11 +18,20 @@ namespace MetricsAgent.Jobs
         public NetworkMetricJob(INetworkMetricsRepository repository)
         {
             _repository = repository;
-            _networkCounter = new PerformanceCounter();
+            _networkCounter = new PerformanceCounter("Сетевой интерфейс", "Всего байт/с", "Realtek PCIe GBE Family Controller");
         }
 
         public Task Execute(IJobExecutionContext context)
         {
+            var allBytesPerSecond = Convert.ToInt32(_networkCounter.NextValue());
+
+            // узнаем когда мы сняли значение метрики.
+            var time = DateTimeOffset.UtcNow;
+
+            // теперь можно записать что-то при помощи репозитория
+
+            _repository.Create(new Models.NetworkMetric { Time = time, Value = allBytesPerSecond });
+
             return Task.CompletedTask;
         }
     }

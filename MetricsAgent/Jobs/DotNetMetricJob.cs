@@ -18,11 +18,20 @@ namespace MetricsAgent.Jobs
         public DotNetMetricJob(IDotNetMetricsRepository repository)
         {
             _repository = repository;
-            _dotNetCounter = new PerformanceCounter();
+            _dotNetCounter = new PerformanceCounter("Память CLR .NET", "Байт во всех кучах", "_Global_");
         }
 
         public Task Execute(IJobExecutionContext context)
         {
+            var bytesInAllHeaps = Convert.ToInt32(_dotNetCounter.NextValue());
+
+            // узнаем когда мы сняли значение метрики.
+            var time = DateTimeOffset.UtcNow;
+
+            // теперь можно записать что-то при помощи репозитория
+
+            _repository.Create(new Models.DotNetMetric { Time = time, Value = bytesInAllHeaps });
+
             return Task.CompletedTask;
         }
     }
