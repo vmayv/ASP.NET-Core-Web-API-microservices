@@ -23,6 +23,14 @@ namespace MetricsAgent.Jobs
 
         public Task Execute(IJobExecutionContext context)
         {
+            var availableInMb = Convert.ToInt32(_ramCounter.NextValue());
+
+            // узнаем когда мы сняли значение метрики.
+            var time = DateTimeOffset.UtcNow;
+
+            // теперь можно записать что-то при помощи репозитория
+
+            _repository.Create(new Models.RamMetric { Time = time, Value = availableInMb });
             return Task.CompletedTask;
         }
     }
