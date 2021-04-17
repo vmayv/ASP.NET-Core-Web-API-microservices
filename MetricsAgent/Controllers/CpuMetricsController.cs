@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Core.Class;
+using Core;
 
 namespace MetricsAgent.Controllers
 {
@@ -64,25 +64,6 @@ namespace MetricsAgent.Controllers
             _logger.LogInformation($"Add item. Parameters: Time = {request.Time}, Value = {request.Value}");
             return Ok();
         }
-        /*для тестирования ответов
-        [HttpGet("all")]
-        public IActionResult GetAll()
-        
-        {
-            var metrics = _repository.GetAll();
-
-            var response = new CpuMetricsByTimePeriodResponse()
-            {
-                Metrics = new List<CpuMetricDto>()
-            };
-
-            foreach (var metric in metrics)
-            {
-                response.Metrics.Add(new CpuMetricDto { Time = metric.Time, Value = metric.Value, Id = metric.Id });
-            }
-
-            return Ok(response);
-        }*/
     }
 
 }
