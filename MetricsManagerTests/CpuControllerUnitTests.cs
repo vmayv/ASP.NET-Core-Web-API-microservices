@@ -36,7 +36,7 @@ namespace MetricsManagerTests
             var agentId = 1;
             var fromTime = TimeSpan.FromSeconds(0);
             var toTime = TimeSpan.FromSeconds(100);
-            var percentile = Core.Class.Percentile.Median;
+            var percentile = Core.Percentile.Median;
 
             //Act
             var result = _controller.GetMetricsByPercentileFromAgent(agentId, fromTime, toTime, percentile);
@@ -65,7 +65,7 @@ namespace MetricsManagerTests
             //Arrange
             var fromTime = TimeSpan.FromSeconds(0);
             var toTime = TimeSpan.FromSeconds(100);
-            var percentile = Core.Class.Percentile.Median;
+            var percentile = Core.Percentile.Median;
 
             //Act
             var result = _controller.GetMetricsByPercentileFromAllCluster(fromTime, toTime, percentile);
