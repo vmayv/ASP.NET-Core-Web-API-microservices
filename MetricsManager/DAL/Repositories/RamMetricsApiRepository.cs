@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces;
+using Dapper;
 using MetricsManager.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,9 @@ namespace MetricsManager.DAL.Repositories
 
     public class RamMetricsApiRepository
     {
+        public RamMetricsApiRepository()
+        {
+            SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
+        }
     }
 }

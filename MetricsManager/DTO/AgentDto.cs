@@ -8,6 +8,6 @@ namespace MetricsManager.DTO
     public class AgentDto
     {
         public int AgentId { get; set; }
-        public string AgentUrl { get; set; }
+        public string AgentAddress { get; set; }
     }
 }
