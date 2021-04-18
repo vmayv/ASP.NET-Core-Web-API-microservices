@@ -39,7 +39,15 @@ namespace MetricsManager.DAL.Repositories
         {
             using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
-                return connection.QuerySingle("SELECT MAX(Time) FROM cpumetrics WHERE agentId = @agentId", new { agentId = agentId });
+                try
+                {
+                    var response = connection.QuerySingle<CpuMetricApi>("SELECT MAX(Time) FROM cpumetrics WHERE agentId = @agentId", new { agentId = agentId });
+                    return response.Time;
+                }
+                catch
+                {
+                    return DateTimeOffset.UnixEpoch;
+                }
             }
         }
 

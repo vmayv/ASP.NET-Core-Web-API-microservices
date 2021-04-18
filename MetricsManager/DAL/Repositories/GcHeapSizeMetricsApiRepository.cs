@@ -39,7 +39,15 @@ namespace MetricsManager.DAL.Repositories
         {
             using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
-                return connection.QuerySingle("SELECT MAX(Time) FROM dotnetmetrics WHERE agentId = @agentId", new { agentId = agentId });
+                try
+                {
+                    var response = connection.QuerySingle<GcHeapSizeMetricApi>("SELECT MAX(Time) FROM dotnetmetrics WHERE agentId = @agentId", new { agentId = agentId });
+                    return response.Time;
+                }
+                catch
+                {
+                    return DateTimeOffset.UnixEpoch;
+                }
             }
         }
 
