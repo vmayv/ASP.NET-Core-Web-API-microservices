@@ -1,3 +1,5 @@
+using FluentMigrator.Runner;
+using MetricsManager.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,7 +28,24 @@ namespace MetricsManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<ICpuMetricsApiRepository, CpuMetricsApiRepository>();
+            services.AddSingleton<INetworkMetricsApiRepository, NetworkMetricsApiRepository>();
+            services.AddSingleton<IGcHeapSizeMetricsApiRepository, GcHeapSizeMetricsApiRepository>();
+            services.AddSingleton<IRamMetricsApiRepository, RamMetricsApiRepository>();
+            services.AddSingleton<IHddMetricsApiRepository, HddMetricsApiRepository>();
+
             services.AddHttpClient();
+
+            services.AddFluentMigratorCore()
+                 .ConfigureRunner(rb => rb
+        // добавляем поддержку SQLite 
+        .AddSQLite()
+        // устанавливаем строку подключения
+        .WithGlobalConnectionString(SQLParams.ConnectionString)
+        // подсказываем где искать классы с миграциями
+        .ScanIn(typeof(Startup).Assembly).For.Migrations()
+    ).AddLogging(lb => lb
+        .AddFluentMigratorConsole());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

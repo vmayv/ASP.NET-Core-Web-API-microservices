@@ -67,8 +67,8 @@ namespace MetricsManager.Client
 
         public AllHddMetricApiResponse GetAllHddMetrics(GetAllHddMetricsApiRequest request)
         {
-            var fromParameter = request.FromTime.TotalSeconds;
-            var toParameter = request.ToTime.TotalSeconds;
+            var fromParameter = request.FromTime;
+            var toParameter = request.ToTime;
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ClientBaseAddress}/api/metrics/hdd/left/from/{fromParameter}/to/{toParameter}");
             try
             {

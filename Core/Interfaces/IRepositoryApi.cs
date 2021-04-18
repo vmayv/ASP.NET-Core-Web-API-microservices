@@ -8,13 +8,13 @@ namespace Core.Interfaces
     {
         void Create(T item);
 
-        IList<T> GetMetricfromDatabase(int adentId, DateTimeOffset fromTime, DateTimeOffset toTime);
+        IList<T> GetMetricfromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime);
 
         T GetMetricbyPercentilefromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile);
 
-        IList<T> GetMetricfromClusterfromDatabase(DateTimeOffset fromTime, DateTimeOffset toTime);
+       // IList<T> GetMetricfromClusterfromDatabase(DateTimeOffset fromTime, DateTimeOffset toTime);
 
-        T GetMetricbyPercentilefromClusterfromDatabase(DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile);
+      //  T GetMetricbyPercentilefromClusterfromDatabase(DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile);
 
         DateTimeOffset GetLastTime(int agentId);
     }
