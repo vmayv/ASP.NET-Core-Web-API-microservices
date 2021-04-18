@@ -1,4 +1,5 @@
-﻿using MetricsManager.Responses;
+﻿using MetricsManager.Requests;
+using MetricsManager.Responses;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
