@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Core.Interfaces
 {
-    interface IAgents<T> where T : class
+    public interface IAgents<T> where T : class
     {
         IList<T> GetAgentList();
 

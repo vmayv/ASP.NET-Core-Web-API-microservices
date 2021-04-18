@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Core.Interfaces
 {
-    interface IRepositoryApi<T> where T : class
+    public interface IRepositoryApi<T> where T : class
     {
         void Create(T item);
 
