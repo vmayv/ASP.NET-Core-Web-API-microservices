@@ -43,13 +43,13 @@ namespace MetricsManager.DAL.Repositories
             }
         }
 
-        public HddMetricApi GetMetricbyPercentilefromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
+        public HddMetricApi GetMetricbyPercentileFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
         {
             throw new NotImplementedException();
         }
 
 
-        public IList<HddMetricApi> GetMetricfromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+        public IList<HddMetricApi> GetMetricFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             using (var connection = new SqliteConnection(SQLParams.ConnectionString))
             {

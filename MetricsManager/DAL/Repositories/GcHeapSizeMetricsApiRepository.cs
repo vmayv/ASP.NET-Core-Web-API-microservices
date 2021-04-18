@@ -43,13 +43,12 @@ namespace MetricsManager.DAL.Repositories
             }
         }
 
-        public GcHeapSizeMetricApi GetMetricbyPercentilefromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
+        public GcHeapSizeMetricApi GetMetricbyPercentileFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
         {
             throw new NotImplementedException();
         }
 
-
-        public IList<GcHeapSizeMetricApi> GetMetricfromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+        public IList<GcHeapSizeMetricApi> GetMetricFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             using (var connection = new SqliteConnection(SQLParams.ConnectionString))
             {

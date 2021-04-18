@@ -43,13 +43,13 @@ namespace MetricsManager.DAL.Repositories
             }
         }
 
-        public RamMetricApi GetMetricbyPercentilefromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
+        public RamMetricApi GetMetricbyPercentileFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
         {
             throw new NotImplementedException();
         }
 
 
-        public IList<RamMetricApi> GetMetricfromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+        public IList<RamMetricApi> GetMetricFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             using (var connection = new SqliteConnection(SQLParams.ConnectionString))
             {
