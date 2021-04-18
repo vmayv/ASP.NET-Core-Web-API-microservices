@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Interfaces;
+using MetricsManager.DAL.Models;
+using MetricsManager.DAL.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,17 +16,20 @@ namespace MetricsManager.Controllers
     public class AgentsController : ControllerBase
     {
         private readonly ILogger<AgentsController> _logger;
+        private readonly IAgentsRepository _repository;
 
-        public AgentsController(ILogger<AgentsController> logger)
+        public AgentsController(ILogger<AgentsController> logger, IAgentsRepository repository)
         {
+            _repository = repository;
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в AgentsController");
         }
 
         [HttpPost("register")]
-        public IActionResult RegisterAgent([FromBody] AgentInfo agentInfo)
-        {
-            _logger.LogInformation($"Parameters: agentInfo = {agentInfo}");
+        public IActionResult RegisterAgent([FromBody] string agentAddress)
+{
+            _repository.RegisterAgent(new AgentInfo { AgentAddress = agentAddress });
+            _logger.LogInformation($"Parameters: agentAddress = {agentAddress}");
             return Ok();
         }
 
@@ -44,8 +50,9 @@ namespace MetricsManager.Controllers
         [HttpGet("getagentslist")]
         public IActionResult GetAgentsList()
         {
+            var agentList = _repository.GetAgentList();
             _logger.LogInformation("Get");
-            return Ok();
+            return Ok(agentList);
         }
 
     }

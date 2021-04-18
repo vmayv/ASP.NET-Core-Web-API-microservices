@@ -9,6 +9,6 @@ namespace MetricsManager.DAL.Models
     {
         public int AgentId { get; }
 
-        public string AgentAddress { get; }
+        public string AgentAddress { get; set; }
     }
 }

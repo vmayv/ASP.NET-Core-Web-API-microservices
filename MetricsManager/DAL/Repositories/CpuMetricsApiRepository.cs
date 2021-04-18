@@ -43,13 +43,13 @@ namespace MetricsManager.DAL.Repositories
             }
         }
 
-        public CpuMetricApi GetMetricbyPercentilefromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
+        public CpuMetricApi GetMetricbyPercentileFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime, Percentile percentile)
         {
             throw new NotImplementedException();
         }
 
 
-        public IList<CpuMetricApi> GetMetricfromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
+        public IList<CpuMetricApi> GetMetricFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             using (var connection = new SqliteConnection(SQLParams.ConnectionString))
             {
