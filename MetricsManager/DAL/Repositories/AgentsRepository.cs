@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Core.Interfaces;
 using Dapper;
 using MetricsManager.DAL.Models;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 
 namespace MetricsManager.DAL.Repositories
 {
@@ -17,7 +17,7 @@ namespace MetricsManager.DAL.Repositories
     {
         public string GetAgentAddressFromId(int id)
         {
-            using (var connection = new SqliteConnection(SQLParams.ConnectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                return connection.QuerySingle("SELECT AgentAddress FROM agents WHERE AgentId = @AgentId", new { AgentId = id });
             }
@@ -25,7 +25,7 @@ namespace MetricsManager.DAL.Repositories
 
         public IList<AgentInfo> GetAgentList()
         {
-            using (var connection = new SqliteConnection(SQLParams.ConnectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                 var response = connection.Query<AgentInfo>("SELECT AgentId, AgentAddress FROM agents").ToList();
 
@@ -35,7 +35,7 @@ namespace MetricsManager.DAL.Repositories
 
         public void RegisterAgent(AgentInfo agent)
         {
-            using (var connection = new SqliteConnection(SQLParams.ConnectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                 connection.Execute("INSERT INTO agents(agentAddress) VALUES(@agentAddress)", new { agentAddress = agent.AgentAddress });
             }

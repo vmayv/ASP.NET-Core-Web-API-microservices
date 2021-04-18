@@ -2,7 +2,7 @@
 using Core.Interfaces;
 using Dapper;
 using MetricsManager.DAL.Models;
-using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace MetricsManager.DAL.Repositories
 
         public void Create(CpuMetricApi item)
         {
-            using (var connection = new SqliteConnection(SQLParams.ConnectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                 connection.Execute("INSERT INTO cpumetrics(agentid, value, time) VALUES(@agentid, @value, @time)",
                     new
@@ -37,7 +37,7 @@ namespace MetricsManager.DAL.Repositories
 
         public DateTimeOffset GetLastTime(int agentId)
         {
-            using (var connection = new SqliteConnection(SQLParams.ConnectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                 return connection.QuerySingle("SELECT MAX(Time) FROM cpumetrics WHERE agentId = @agentId", new { agentId = agentId });
             }
@@ -51,7 +51,7 @@ namespace MetricsManager.DAL.Repositories
 
         public IList<CpuMetricApi> GetMetricFromDatabase(int agentId, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            using (var connection = new SqliteConnection(SQLParams.ConnectionString))
+            using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
                 return connection.Query<CpuMetricApi>("SELECT id, value, time, agentid FROM cpumetrics WHERE agentid=@agentId AND time BETWEEN @fromTime AND @toTime", new { agentId = agentId, fromTime = fromTime.Ticks, toTime = toTime.Ticks }).ToList();
             }

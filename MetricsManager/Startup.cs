@@ -29,6 +29,7 @@ namespace MetricsManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<IAgentsRepository, AgentsRepository>();
             services.AddSingleton<ICpuMetricsApiRepository, CpuMetricsApiRepository>();
             services.AddSingleton<INetworkMetricsApiRepository, NetworkMetricsApiRepository>();
             services.AddSingleton<IGcHeapSizeMetricsApiRepository, GcHeapSizeMetricsApiRepository>();
