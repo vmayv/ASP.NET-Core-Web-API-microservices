@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentMigrator.Runner;
+using MetricsManager.Client;
 using MetricsManager.DAL.Repositories;
 using MetricsManager.Jobs;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,8 @@ namespace MetricsManager
             services.AddSingleton<IGcHeapSizeMetricsApiRepository, GcHeapSizeMetricsApiRepository>();
             services.AddSingleton<IRamMetricsApiRepository, RamMetricsApiRepository>();
             services.AddSingleton<IHddMetricsApiRepository, HddMetricsApiRepository>();
+
+            services.AddSingleton<IMetricsAgentClient, MetricsAgentClient>();
 
 
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));

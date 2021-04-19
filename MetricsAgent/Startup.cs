@@ -58,7 +58,7 @@ namespace MetricsAgent
             services.AddSingleton<DotNetMetricJob>();
             services.AddSingleton<RamMetricJob>();
             services.AddSingleton<HddMetricJob>();
-            services.AddSingleton<NetworkMetricJob>();
+            //services.AddSingleton<NetworkMetricJob>();
 
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(CpuMetricJob),
@@ -72,9 +72,9 @@ namespace MetricsAgent
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(HddMetricJob),
                 cronExpression: "0/5 * * * * ?"));
-            services.AddSingleton(new JobSchedule(
+            /*services.AddSingleton(new JobSchedule(
                 jobType: typeof(NetworkMetricJob),
-                cronExpression: "0/5 * * * * ?"));
+                cronExpression: "0/5 * * * * ?"));*/
             services.AddHostedService<QuartzHostedService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
