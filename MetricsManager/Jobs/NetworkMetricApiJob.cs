@@ -10,6 +10,7 @@ using MetricsManager.DAL.Models;
 
 namespace MetricsManager.Jobs
 {
+    [DisallowConcurrentExecution]
     public class NetworkMetricApiJob : IJob
     {
         private readonly IMetricsAgentClient _agentClient;

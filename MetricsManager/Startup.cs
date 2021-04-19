@@ -64,7 +64,7 @@ namespace MetricsManager
             services.AddSingleton<GcHeapSizeMetricApiJob>();
             services.AddSingleton<RamMetricApiJob>();
             services.AddSingleton<HddMetricApiJob>();
-            services.AddSingleton<NetworkMetricApiJob>();
+            //services.AddSingleton<NetworkMetricApiJob>();
 
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(CpuMetricApiJob),
@@ -78,9 +78,9 @@ namespace MetricsManager
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(HddMetricApiJob),
                 cronExpression: "0/5 * * * * ?"));
-            services.AddSingleton(new JobSchedule(
+            /*services.AddSingleton(new JobSchedule(
                 jobType: typeof(NetworkMetricApiJob),
-                cronExpression: "0/5 * * * * ?"));
+                cronExpression: "0/5 * * * * ?"));*/
             services.AddHostedService<QuartzHostedService>();
         }
 
