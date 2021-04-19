@@ -1,4 +1,5 @@
-﻿using Quartz;
+﻿using Microsoft.Extensions.Hosting;
+using Quartz;
 using Quartz.Spi;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.Jobs
 {
-    public class QuartzHostedService
+    public class QuartzHostedService : IHostedService
     {
         private readonly ISchedulerFactory _schedulerFactory;
         private readonly IJobFactory _jobFactory;
