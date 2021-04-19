@@ -34,14 +34,14 @@ namespace MetricsManager.Jobs
 
             foreach (var agent in agentsList)
             {
-                DateTimeOffset fromtime = _repository.GetLastTime(agent.AgentId);
-                DateTimeOffset totime = DateTimeOffset.UtcNow;
+                DateTimeOffset fromTime = _repository.GetLastTime(agent.AgentId);
+                DateTimeOffset toTime = DateTimeOffset.UtcNow;
 
                 var request = new GetAllHddMetricsApiRequest
                 {
                     ClientBaseAddress = agent.AgentAddress,
-                    FromTime = fromtime,
-                    ToTime = totime
+                    FromTime = fromTime,
+                    ToTime = toTime
                 };
 
                 var metrics = _agentClient.GetAllHddMetrics(request);
