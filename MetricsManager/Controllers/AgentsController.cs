@@ -27,9 +27,9 @@ namespace MetricsManager.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult RegisterAgent([FromBody] string agentAddress)
+        public IActionResult RegisterAgent([FromBody] AgentInfo agentAddress)
 {
-            _repository.RegisterAgent(new AgentInfo { AgentAddress = agentAddress });
+            _repository.RegisterAgent(new AgentInfo { AgentAddress = agentAddress.AgentAddress });
             _logger.LogInformation($"Parameters: agentAddress = {agentAddress}");
             return Ok();
         }

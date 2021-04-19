@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MetricsManager.Client
 {
-    interface IMetricsAgentClient
+    public interface IMetricsAgentClient
     {
         AllCpuMetricApiResponse GetAllCpuMetrics(GetAllCpuMetricsApiRequest request);
 
