@@ -45,7 +45,7 @@ namespace MetricsManager.Jobs
                 };
 
                 var metrics = _agentClient.GetAllHddMetrics(request);
-
+                
                 if (metrics.Metrics.Count == 0)
                 {
                     return Task.CompletedTask;

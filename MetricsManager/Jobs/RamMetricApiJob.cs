@@ -45,7 +45,7 @@ namespace MetricsManager.Jobs
                 };
 
                 var metrics = _agentClient.GetAllRamMetrics(request);
-
+                
                 if (metrics.Metrics.Count == 0)
                 {
                     return Task.CompletedTask;

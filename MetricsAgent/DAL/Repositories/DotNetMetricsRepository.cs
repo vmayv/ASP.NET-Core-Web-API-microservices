@@ -34,7 +34,7 @@ namespace MetricsAgent.DAL.Repositories
                         value = item.Value,
 
                         // записываем в поле time количество секунд
-                        time = item.Time
+                        time = item.Time.ToUnixTimeSeconds()
                     });
             }
         }
