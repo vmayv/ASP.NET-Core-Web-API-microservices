@@ -34,7 +34,7 @@ namespace MetricsAgent.DAL.Repositories
                         value = item.Value,
 
                         // записываем в поле time количество секунд
-                        time = item.Time.Ticks
+                        time = item.Time
                     });
             }
         }
@@ -46,8 +46,8 @@ namespace MetricsAgent.DAL.Repositories
                 return connection.Query<DotNetMetric>("SELECT * FROM dotnetmetrics WHERE time BETWEEN @fromDateLong AND @toDateLong",
                     new
                     {
-                        fromDateLong = fromDate.Ticks,
-                        toDateLong = toDate.Ticks
+                        fromDateLong = fromDate.ToUnixTimeSeconds(),
+                        toDateLong = toDate.ToUnixTimeSeconds()
                     }).ToList();
             }
         }
