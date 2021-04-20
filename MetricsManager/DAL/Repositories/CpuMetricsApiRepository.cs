@@ -30,7 +30,7 @@ namespace MetricsManager.DAL.Repositories
                     {
                         agentid = item.AgentId,
                         value = item.Value,
-                        time = item.Time.Ticks
+                        time = item.Time.ToUnixTimeSeconds()
                     });
             }
         }
@@ -61,7 +61,7 @@ namespace MetricsManager.DAL.Repositories
         {
             using (var connection = new SQLiteConnection(SQLParams.ConnectionString))
             {
-                return connection.Query<CpuMetricApi>("SELECT id, value, time, agentid FROM cpumetrics WHERE agentid=@agentId AND time BETWEEN @fromTime AND @toTime", new { agentId = agentId, fromTime = fromTime.Ticks, toTime = toTime.Ticks }).ToList();
+                return connection.Query<CpuMetricApi>("SELECT id, value, time, agentid FROM cpumetrics WHERE agentid=@agentId AND time BETWEEN @fromTime AND @toTime", new { agentId = agentId, fromTime = fromTime.ToUnixTimeSeconds(), toTime = toTime.ToUnixTimeSeconds() }).ToList();
             }
         }
     }

@@ -25,8 +25,8 @@ namespace MetricsManager.Client
 
         public AllCpuMetricApiResponse GetAllCpuMetrics(GetAllCpuMetricsApiRequest request)
         {
-            var fromParameter = request.FromTime;
-            var toParameter = request.ToTime;
+            var fromParameter = request.FromTime.ToString("O");
+            var toParameter = request.ToTime.ToString("O");
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ClientBaseAddress}/api/metrics/cpu/from/{fromParameter}/to/{toParameter}");
 
             try
@@ -46,8 +46,8 @@ namespace MetricsManager.Client
 
         public AllGcHeapSizeMetricApiResponse GetAllGcHeapSizeMetrics(GetAllGcHeapSizeMetricsApiRequest request)
         {
-            var fromParameter = request.FromTime;
-            var toParameter = request.ToTime;
+            var fromParameter = request.FromTime.ToString("O");
+            var toParameter = request.ToTime.ToString("O");
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ClientBaseAddress}/api/metrics/dotnet/errors-count/from/{fromParameter}/to/{toParameter}");
 
             try
@@ -67,8 +67,8 @@ namespace MetricsManager.Client
 
         public AllHddMetricApiResponse GetAllHddMetrics(GetAllHddMetricsApiRequest request)
         {
-            var fromParameter = request.FromTime;
-            var toParameter = request.ToTime;
+            var fromParameter = request.FromTime.ToString("O");
+            var toParameter = request.ToTime.ToString("O");
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ClientBaseAddress}/api/metrics/hdd/left/from/{fromParameter}/to/{toParameter}");
             try
             {
@@ -88,8 +88,8 @@ namespace MetricsManager.Client
 
         public AllNetworkMetricApiResponse GetAllNetworkMetrics(GetAllNetworkMetricsApiRequest request)
         {
-            var fromParameter = request.FromTime;
-            var toParameter = request.ToTime;
+            var fromParameter = request.FromTime.ToString("O");
+            var toParameter = request.ToTime.ToString("O");
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ClientBaseAddress}/api/metrics/network/from/{fromParameter}/to/{toParameter}");
 
             try
@@ -109,8 +109,8 @@ namespace MetricsManager.Client
 
         public AllRamMetricApiResponse GetAllRamMetrics(GetAllRamMetricsApiRequest request)
         {
-            var fromParameter = request.FromTime;
-            var toParameter = request.ToTime;
+            var fromParameter = request.FromTime.ToString("O");
+            var toParameter = request.ToTime.ToString("O");
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ClientBaseAddress}/api/metrics/ram/avaliable/from/{fromParameter}/to/{toParameter}");
 
             try
