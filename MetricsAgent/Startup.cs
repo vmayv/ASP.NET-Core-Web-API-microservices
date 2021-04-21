@@ -10,9 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace MetricsAgent
 {
@@ -76,6 +80,34 @@ namespace MetricsAgent
                 jobType: typeof(NetworkMetricJob),
                 cronExpression: "0/5 * * * * ?"));*/
             services.AddHostedService<QuartzHostedService>();
+
+            services.AddSwaggerGen();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "API сервиса агента сбора метрик",
+                    Description = "Для тестирования API агента сбора метрик",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Mayorov",
+                        Email = string.Empty,
+                        Url = new Uri("https://example.com/"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Без лицензии!",
+                        Url = new Uri("https://example.com/license"),
+                    }
+                });
+                // Указываем файл из которого брать комментарии для Swagger UI
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
@@ -97,6 +129,18 @@ namespace MetricsAgent
             });
 
             migrationRunner.MigrateUp();
+
+            // Включение middleware в пайплайн для обработки Swagger запросов.
+            app.UseSwagger();
+            // включение middleware для генерации swagger-ui 
+            // указываем Swagger JSON эндпоинт (куда обращаться за сгенерированной спецификацией
+            // по которой будет построен UI).
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API сервиса агента сбора метрик");
+                c.RoutePrefix = string.Empty;
+            });
+
         }
     }
 }
