@@ -29,7 +29,21 @@ namespace MetricsManager.Controllers
             _logger = logger;
             _logger.LogInformation(1, "NLog встроен в CpuMetricsController");
         }
-
+        /// <summary>
+        /// Получает метрики CPU на заданном диапазоне времени от заданного агента
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     GET api/metrics/cpu/agent/8/from/1970-05-20/to/2022-01-05
+        ///
+        /// </remarks>
+        /// <param name="agentId">Идентификатор агента</param>
+        /// <param name="fromTime">Начальная дата в формате yyyy-mm-dd</param>
+        /// <param name="toTime">Конечная дата в формате yyyy-mm-dd</param>
+        /// <returns>Список метрик, которые были сохранены в заданном диапазоне времени для заданного агента</returns>
+        /// <response code="201">Если все хорошо</response>
+        /// <response code="400">если передали не правильные параметры</response>  
         [HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAgent([FromRoute] int agentId, [FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
