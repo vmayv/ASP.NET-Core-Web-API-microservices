@@ -27,7 +27,7 @@ namespace MetricsManagerClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CpuChart.ColumnServiesValues[0].Values.Add(48d);
+            CpuChart.ColumnServiesValues[0].Values.Add(47d);
         }
     }
 
