@@ -31,7 +31,20 @@ namespace MetricsAgent.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Получает метрики CPU на заданном диапазоне времени
+        /// </summary>
+        /// <remarks>
+        /// Пример запроса:
+        ///
+        ///     GET api/metrics/cpu/from/1970-05-20/to/2022-01-05
+        ///
+        /// </remarks>
+        /// <param name="fromTime">Начальная дата в формате yyyy-mm-dd</param>
+        /// <param name="toTime">Конечная дата в формате yyyy-mm-dd</param>
+        /// <returns>Список метрик, которые были сохранены в заданном диапазоне времени</returns>
+        /// <response code="201">Если все хорошо</response>
+        /// <response code="400">если передали не правильные параметры</response> 
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsByTimePeriod([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {   
