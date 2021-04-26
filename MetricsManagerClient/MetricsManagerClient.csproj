@@ -116,14 +116,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MaterialCards.xaml">
+    <Page Include="MetricsChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaterialCards.xaml.cs">
-      <DependentUpon>MaterialCards.xaml</DependentUpon>
+    <Compile Include="MetricsChart.xaml.cs">
+      <DependentUpon>MetricsChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
