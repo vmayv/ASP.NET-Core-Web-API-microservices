@@ -11,12 +11,12 @@ namespace MetricsManagerClient.Client
     {
 
         private readonly HttpClient _httpClient;
-        private readonly ILogger<MetricsManagerClient> _logger;
+        //private readonly ILogger<MetricsManagerClient> _logger;
 
-        public MetricsManagerClient(HttpClient httpClient, ILogger<MetricsManagerClient> logger)
+        public MetricsManagerClient(HttpClient httpClient)//, ILogger<MetricsManagerClient> logger)
         {
             _httpClient = httpClient;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public AllAgentsResponse GetAllAgents(GetAllAgentsRequest request)
@@ -40,7 +40,7 @@ namespace MetricsManagerClient.Client
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
             }
             return null;
         }
@@ -61,7 +61,7 @@ namespace MetricsManagerClient.Client
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
             }
             return null;
         }
@@ -80,7 +80,7 @@ namespace MetricsManagerClient.Client
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
             }
 
             return null;
@@ -103,7 +103,7 @@ namespace MetricsManagerClient.Client
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
             }
             return null;
         }
@@ -124,7 +124,7 @@ namespace MetricsManagerClient.Client
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                //_logger.LogError(ex.Message);
             }
             return null;
         }
