@@ -41,6 +41,8 @@ namespace MetricsManagerClient
 
         public SeriesCollection ColumnServiesValues { get; set; }
 
+        public string Title { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName = null)

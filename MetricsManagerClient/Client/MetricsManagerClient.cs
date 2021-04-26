@@ -1,7 +1,8 @@
-﻿using MetricsManagerClient.Requests;
+﻿using MetricsManagerClient.DTO;
+using MetricsManagerClient.Requests;
 using MetricsManagerClient.Responses;
-using NLog;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -19,9 +20,24 @@ namespace MetricsManagerClient.Client
             //_logger = logger;
         }
 
-        public AllAgentsResponse GetAllAgents(GetAllAgentsRequest request)
+        public AllAgentsResponse GetAllAgents()
         {
-            throw new NotImplementedException();
+            return new AllAgentsResponse
+            {
+                Agents = new List<AgentDto>
+                {
+                    new AgentDto
+                    {
+                        AgentId = 1,
+                        AgentAddress = "123",
+                    },
+                    new AgentDto
+                    {
+                        AgentId = 2,
+                        AgentAddress = "456",
+                    },
+                }
+            };
         }
 
         public AllCpuMetricResponse GetAllCpuMetrics(GetAllCpuMetricsRequest request)

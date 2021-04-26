@@ -19,6 +19,6 @@ namespace MetricsManagerClient.Client
 
         AllRamMetricResponse GetAllRamMetrics(GetAllRamMetricsRequest request);
 
-        AllAgentsResponse GetAllAgents(GetAllAgentsRequest request);
+        AllAgentsResponse GetAllAgents();
     }
 }
