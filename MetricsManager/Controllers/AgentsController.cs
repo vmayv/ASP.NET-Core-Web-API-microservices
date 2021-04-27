@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.Json;
+using MetricsManager.Responses;
+using MetricsManager.DTO;
+using AutoMapper;
 
 namespace MetricsManager.Controllers
 {
@@ -18,11 +21,13 @@ namespace MetricsManager.Controllers
     {
         private readonly ILogger<AgentsController> _logger;
         private readonly IAgentsRepository _repository;
+        private readonly IMapper _mapper;
 
-        public AgentsController(ILogger<AgentsController> logger, IAgentsRepository repository)
+        public AgentsController(ILogger<AgentsController> logger, IAgentsRepository repository, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
             _logger.LogInformation(1, "NLog встроен в AgentsController");
         }
 
@@ -52,8 +57,16 @@ namespace MetricsManager.Controllers
         public IActionResult GetAgentsList()
         {
             var agentList = _repository.GetAgentList();
-            _logger.LogInformation("Get");
-            return Ok(agentList);
+            var response = new AllAgentsApiResponse()
+            {
+                Agents = new List<AgentDto>()
+            };
+
+            foreach (var agent in agentList)
+            {
+                response.Agents.Add(_mapper.Map<AgentDto>(agent));
+            }
+            return Ok(response);
         }
 
     }

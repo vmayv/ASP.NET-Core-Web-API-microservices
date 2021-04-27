@@ -17,6 +17,7 @@ namespace MetricsManager
             CreateMap<HddMetricApi, HddMetricApiDto>();
             CreateMap<NetworkMetricApi, NetworkMetricApiDto>();
             CreateMap<RamMetricApi, RamMetricApiDto>();
+            CreateMap<AgentInfo, AgentDto>();
             /*CreateMap<RamMetric, RamMetricsGetLastResponse>();
             CreateMap<HddMetric, HddMetricsGetLastResponse>();
 
