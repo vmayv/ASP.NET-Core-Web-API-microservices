@@ -9,6 +9,8 @@ namespace MetricsManagerClient.Requests
     {
         public int AgentId { get; set; }
 
+        public string AgentAddress { get; set; }
+
         public DateTimeOffset FromTime { get; set; }
 
         public DateTimeOffset ToTime { get; set; }
