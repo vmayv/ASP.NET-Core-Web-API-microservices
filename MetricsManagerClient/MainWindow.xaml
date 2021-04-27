@@ -5,11 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MetricsManagerClient"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindow}"
         Title="MainWindow" Height="800" Width="1600">
+
     <Grid>
-        <StackPanel>
-            <local:MaterialCards Grid.Column="0" Grid.Row="0" x:Name="CpuChart"></local:MaterialCards>
-            <Button Width="400" Height="200" Click="Button_Click">Привет</Button>
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="400"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel  Grid.Column="0" Grid.Row="0">
+                <Button Width="200" Height="50" Click="Button_Click" >Получить список агентов</Button>
+                <ComboBox Height="50" IsSynchronizedWithCurrentItem="True" x:Name="AgentsBox" SelectionChanged="AgentsBox_SelectionChanged"/>
+            </StackPanel>
+            <local:MetricsChart Title="RAM" Grid.Column="1" Grid.Row="0" x:Name="RamChart"></local:MetricsChart>
+            <local:MetricsChart Title="CPU" Grid.Column="2" Grid.Row="0" x:Name="CpuChart"></local:MetricsChart>
+            <local:MetricsChart Title="HDD" Grid.Column="1" x:Name="HddChart" Margin="0,350,0,64" Grid.RowSpan="2"/>
+            <local:MetricsChart Title="Network" Grid.Column="2" x:Name="NetworkChart" Margin="0,350,0,64" Grid.RowSpan="2" />
+
+        </Grid>
+
     </Grid>
 </Window>

@@ -8,12 +8,14 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>MetricsManagerClient</RootNamespace>
     <AssemblyName>MetricsManagerClient</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>8</LangVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,8 +43,20 @@
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.9\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Json, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,6 +75,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DTO\AgentDto.cs" />
+    <Compile Include="DTO\CpuMetricDto.cs" />
+    <Compile Include="DTO\GcHeapSizeMetricDto.cs" />
+    <Compile Include="DTO\HddMetricDto.cs" />
+    <Compile Include="DTO\NetworkMetricDto.cs" />
+    <Compile Include="DTO\RamMetricDto.cs" />
+    <Compile Include="Requests\GetAllAgentsRequest.cs" />
+    <Compile Include="Requests\GetAllCpuMetricsRequest.cs" />
+    <Compile Include="Requests\GetAllGcHeapSizeMetricsRequest.cs" />
+    <Compile Include="Requests\GetAllHddMetricsRequest.cs" />
+    <Compile Include="Requests\GetAllNetworkMetricsRequest.cs" />
+    <Compile Include="Requests\GetAllRamMetricsRequest.cs" />
+    <Compile Include="Responses\AllCpuMetricResponse.cs" />
+    <Compile Include="Responses\AllGcHeapSizeMetricResponse.cs" />
+    <Compile Include="Responses\AllHddMetricResponse.cs" />
+    <Compile Include="Responses\AllNetworkMetricResponse.cs" />
+    <Compile Include="Responses\AllAgentsResponse.cs" />
+    <Compile Include="Responses\AllRamMetricResponse.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,18 +101,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Client\IMetricsManagerClient.cs" />
+    <Compile Include="Client\MetricsManagerClient.cs" />
+    <Compile Include="DAL\Models\Agent.cs" />
+    <Compile Include="DAL\Models\CpuMetric.cs" />
+    <Compile Include="DAL\Models\GcHeapSizeMetric.cs" />
+    <Compile Include="DAL\Models\HddMetric.cs" />
+    <Compile Include="DAL\Models\NetworkMetric.cs" />
+    <Compile Include="DAL\Models\RamMetric.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MaterialCards.xaml">
+    <Page Include="MetricsChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaterialCards.xaml.cs">
-      <DependentUpon>MaterialCards.xaml</DependentUpon>
+    <Compile Include="MetricsChart.xaml.cs">
+      <DependentUpon>MetricsChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -108,5 +148,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
