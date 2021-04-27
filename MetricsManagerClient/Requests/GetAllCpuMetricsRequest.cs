@@ -7,7 +7,7 @@ namespace MetricsManagerClient.Requests
 {
     public class GetAllCpuMetricsRequest
     {
-        public string ManagerBaseAddress { get; set; }
+        public int AgentId { get; set; }
 
         public DateTimeOffset FromTime { get; set; }
 

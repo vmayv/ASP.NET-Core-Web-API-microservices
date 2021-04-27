@@ -1,5 +1,6 @@
 ﻿using MetricsManagerClient.Client;
 using MetricsManagerClient.Requests;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,14 +23,15 @@ namespace MetricsManagerClient
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AgentsBox.Items.Clear();
-            metricsManagerClient.GetAllAgents().Agents.ForEach(e => AgentsBox.Items.Add(e.AgentAddress));
+            metricsManagerClient.GetAllAgents().Agents.ForEach(e => AgentsBox.Items.Add(e.AgentId));
         }
 
         private void AgentsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string agentUrl = AgentsBox.SelectedItem as string;
-            
-            var cpuMetric = metricsManagerClient.GetAllCpuMetrics(new GetAllCpuMetricsRequest { ManagerBaseAddress = agentUrl });
+            int agentId = (int)AgentsBox.SelectedItem;
+            DateTimeOffset fromTime = DateTimeOffset.Parse("27.04.1980"); // значение для отладки
+            DateTimeOffset toTime = DateTimeOffset.UtcNow;
+            var cpuMetric = metricsManagerClient.GetAllCpuMetrics(new GetAllCpuMetricsRequest { AgentId = agentId, FromTime = fromTime, ToTime = toTime });
                         //CpuChart.ColumnServiesValues[0].Values = cpuMetrics..
         }
     }

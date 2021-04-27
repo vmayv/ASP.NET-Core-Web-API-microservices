@@ -44,7 +44,8 @@ namespace MetricsManagerClient.Client
         {
             var fromParameter = request.FromTime.ToString("O");
             var toParameter = request.ToTime.ToString("O");
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"{request.ManagerBaseAddress}/api/metrics/cpu/from/{fromParameter}/to/{toParameter}");
+            var agentId = request.AgentId;
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"/api/metrics/cpu/agent/{agentId}/from/{fromParameter}/to/{toParameter}");
 
             try
             {
