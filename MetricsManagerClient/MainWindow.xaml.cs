@@ -25,6 +25,7 @@ namespace MetricsManagerClient
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AgentsBox.Items.Clear();
+            var x = metricsManagerClient.GetAllAgents();
             metricsManagerClient.GetAllAgents().Agents.ForEach(e => AgentsBox.Items.Add($"{e.AgentId}-{e.AgentAddress}"));
         }
 

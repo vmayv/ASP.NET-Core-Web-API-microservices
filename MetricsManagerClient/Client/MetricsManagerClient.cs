@@ -22,7 +22,22 @@ namespace MetricsManagerClient.Client
 
         public AllAgentsResponse GetAllAgents()
         {
-            return new AllAgentsResponse
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, @"http://localhost:50500/api/agents/getagentslist");
+
+            try
+            {
+                HttpResponseMessage response = _httpClient.SendAsync(httpRequest).Result;
+
+                using var responseStream = response.Content.ReadAsStreamAsync().Result;
+
+                return JsonSerializer.DeserializeAsync<AllAgentsResponse>(responseStream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Result;
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex.Message);
+            }
+            return null;
+           /* return new AllAgentsResponse
             {
                 Agents = new List<AgentDto>
                 {
@@ -37,7 +52,7 @@ namespace MetricsManagerClient.Client
                         AgentAddress = "456",
                     },
                 }
-            };
+            };*/
         }
 
         public AllCpuMetricResponse GetAllCpuMetrics(GetAllCpuMetricsRequest request)
